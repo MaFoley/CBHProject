@@ -4,6 +4,12 @@
 using namespace std;
 
 void option1();
+void option2();
+void option3();
+void option4();
+void option5();
+void option6();
+void option7();
 void PrintMenu();
 
 int main () 
@@ -23,6 +29,36 @@ int main ()
                 getline(cin, opt);
                 cin.sync();
                 break;
+            case '2':
+                option2();
+                getline(cin, opt);
+                cin.sync();
+                break;
+            case '3':
+                option3();
+                getline(cin, opt);
+                cin.sync();
+                break;
+            case '4':
+                option4();
+                getline(cin, opt);
+                cin.sync();
+                break;
+            case '5':
+                option5();
+                getline(cin, opt);
+                cin.sync();
+                break;
+            case '6':
+                option6();
+                getline(cin, opt);
+                cin.sync();
+                break;
+            case '7':
+                option7();
+                getline(cin, opt);
+                cin.sync();
+                break;
             case 'q':
             case 'Q':
                 continueLoop = false;
@@ -30,6 +66,8 @@ int main ()
                     break;
             default:
                 cout << "Invalid Selection. Please select (1-7) or q\n";
+                getline(cin, opt);
+                cin.sync();
                 break;
         }
     }
