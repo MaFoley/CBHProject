@@ -97,7 +97,7 @@ void PrintMenu()
     cout << "\t\t\t(Q) - Exit Database\n\n";
 
     cout.fill('*');
-    cout.width(8);
+    cout.width(80);
     cout << '*';
     cout <<"\n\n\t\t\tEnter a Selection: ";
 }
