@@ -21,7 +21,8 @@ int main ()
     while(continueLoop)
     {
         PrintMenu();
-        UserWait();
+        getline(cin, opt);
+        cin.sync();
 
         switch(opt[0])
         {
