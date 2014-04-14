@@ -21,7 +21,8 @@ int main ()
     while(continueLoop)
     {
         PrintMenu();
-        UserWait();
+        getline(cin, opt);
+        cin.sync();
 
         switch(opt[0])
         {
@@ -59,7 +60,8 @@ int main ()
                 cout << "Exit CBH Project\n";
                     break;
             default:
-                cout << "Invalid Selection. Please select (1-7) or q\n";
+                cout << "\n\t\t\tInvalid Selection. You entered: " << opt << "\n";
+                cout << "\t\t\tPlease select (1-7) or q\n";
                 UserWait();
                 break;
         }
