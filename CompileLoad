@@ -1,0 +1,5 @@
+g++ -o CreateColor CreateColor.cpp
+g++ -o CreateCounty CreateCounty.cpp
+g++ -o CreateVMake CreateVMake.cpp
+g++ -o CreateVType CreateVType.cpp
+g++ -o CreateState CreateState.cpp
