@@ -34,7 +34,7 @@ State::State():
         inputFile.read(_pStates, _numberStates * _recordLength);
         inputFile.close();
 
-        _pState = new char[ _length + 1];
+        _pState = new char[ _recordLength + 1];
     }
 }
 
