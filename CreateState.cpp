@@ -1,7 +1,13 @@
 #include <iostream>
+<<<<<<< HEAD
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
+=======
+#include<cstring>
+#include<cstdlib>
+#include<fstream>
+>>>>>>> 22495c729aea2797b29bfaa34355d09c8dc13a17
 
 using namespace std;
 const int CODELENGTH = 2;
@@ -24,6 +30,7 @@ int main()
     ofstream outputFile;
 
     inputFile.open(INFILE);
+<<<<<<< HEAD
     
     if(!inputFile)
     {
@@ -84,3 +91,6 @@ int main()
      
     return 0;
 }
+=======
+
+>>>>>>> 22495c729aea2797b29bfaa34355d09c8dc13a17
