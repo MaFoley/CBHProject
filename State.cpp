@@ -37,7 +37,13 @@ State::State():
         _pState = new char[ _recordLength + 1];
     }
 }
-
+char * State::GetState(int inStateCode) const
+{
+    strncpy(_pState, _pStates + (LENGTH * (inStateCode-1)), LENGTH);
+    *(_pState+LENGTH-1) = '\0';
+    return _pState;
+}
+    
 State::~State()
 {
     delete [] _pStates;

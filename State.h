@@ -7,11 +7,10 @@ class State
         int GetMaxCode() const { return _maxCode; }
         int GetRecordLength() const { return _recordLength; }
         int GetNumberStates() const { return _numberStates; }
+
         char * GetStates() const { return _pStates; }
-        /*
-        char * GetState( int inStateCode; ) const;
-        void DisplayStates() const;
-        */
+        char * GetState(int inStateCode) const;
+        //void DisplayStates() const;
     private:
         int _minCode;
         int _maxCode;
