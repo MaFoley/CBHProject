@@ -10,9 +10,11 @@ void option4();
 void option5();
 void option6();
 void option7();
+
+string UserWait();
 void PrintMenu();
 
-int main () 
+int main ()
 {
     bool continueLoop = true;
     string opt;
@@ -26,38 +28,31 @@ int main ()
         {
             case '1':
                 option1();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '2':
                 option2();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '3':
                 option3();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '4':
                 option4();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '5':
                 option5();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '6':
                 option6();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case '7':
                 option7();
-                getline(cin, opt);
-                cin.sync();
+                UserWait();
                 break;
             case 'q':
             case 'Q':
@@ -65,9 +60,9 @@ int main ()
                 cout << "Exit CBH Project\n";
                     break;
             default:
-                cout << "Invalid Selection. Please select (1-7) or q\n";
-                getline(cin, opt);
-                cin.sync();
+                cout << "\n\t\t\tInvalid Selection. You entered: " << opt << "\n";
+                cout << "\t\t\tPlease select (1-7) or q\n";
+                UserWait();
                 break;
         }
     }

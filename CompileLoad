@@ -1,0 +1,10 @@
+echo 'CreateColor: '
+g++ -o CreateColor CreateColor.cpp
+echo 'CreateCounty:'
+g++ -o CreateCounty CreateCounty.cpp
+echo 'CreateVMake:'
+g++ -o CreateVMake CreateVMake.cpp
+echo 'CreateVType:'
+g++ -o CreateVType CreateVType.cpp
+echo 'CreateState:'
+g++ -o CreateState CreateState.cpp
