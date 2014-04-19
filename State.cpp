@@ -69,24 +69,44 @@ void State::DisplayStates() const
     }
     currentColumn = 0;
     currentRow = 0;
-    memset(outputBuffer, 0x20, sizeof(outputBuffer));
+    memset(outputBuffer, ' ', sizeof(outputBuffer));
 
     for(i = 0; i < _numberStates; i++)
     {
-        columnPosition = currentColumn * COLUMNWIDTH;
-        snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode);
-        outputBuffer[currentRow][columnPosition+2] = ' ';
-        strncpy(outputBuffer[currentRow]+3, singleRecord, 2); //Writing the Abbreviation
-        outputBuffer[currentRow][columnPosition + 5] = ' ';
-        strncpy(outputBuffer[currentRow]+6,singleRecord+2, _recordLength-2); //Writing the Data Name
+        
 
-        if (i > NUMBERROWS)
+        columnPosition = currentColumn * COLUMNWIDTH;
+
+        //Writing the Data Code
+        snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode); 
+        outputBuffer[currentRow][columnPosition+2] = ' ';
+        strncpy(singleRecord, GetState(i + _minCode), _recordLength);
+        cerr << "singleRecord: " << singleRecord << endl;
+
+        //Writing the Abbreviation
+        strncpy(outputBuffer[currentRow]+columnPosition + 3, singleRecord, 2); 
+        outputBuffer[currentRow][columnPosition + 5] = ' ';
+
+        //Writing the Data Name
+        strncpy(outputBuffer[currentRow]+ columnPosition + 6,singleRecord+2, _recordLength-2); 
+        currentRow++;
+        
+        if (currentRow > NUMBERROWS - 1)
         {
             currentColumn++;
             currentRow = 0;
         }
 
+        
+
     }
+
+    for(i = 0; i < NUMBERROWS; i++)
+    {
+        cout.write(outputBuffer[i], BUFFERWIDTH);
+        cout << endl;
+    }
+
 }
 State::~State()
 {

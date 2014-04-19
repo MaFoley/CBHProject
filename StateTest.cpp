@@ -15,6 +15,7 @@ int main()
     cout << "GetStates: \n" << pStateObj -> GetState(1) << endl;
     cout << pStateObj -> GetState(2) << endl;
     cout << pStateObj -> GetState(51) << endl;
+    pStateObj -> DisplayStates();
 
     delete pStateObj;
     return 0;
