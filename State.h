@@ -9,7 +9,7 @@ class State
         int GetNumberStates() const { return _numberStates; }
         char * GetStates() const { return _pStates; }
         char * GetState(int inStateCode) const;
-        //void DisplayStates() const;
+        void DisplayStates() const;
     private:
         int _minCode;
         int _maxCode;

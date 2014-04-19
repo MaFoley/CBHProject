@@ -10,11 +10,11 @@ const int MINCODE = 1;
 const int MAXCODE = 51;
 const int LENGTH = 22;
 
-State::State():  
-    _minCode(MINCODE), 
-    _maxCode(MAXCODE), 
+State::State():
+    _minCode(MINCODE),
+    _maxCode(MAXCODE),
     _recordLength(LENGTH)
-{ 
+{
     char INFILE[] =  "state.db";
     ifstream inputFile;
 
@@ -37,23 +37,57 @@ State::State():
         _pState = new char[ _recordLength + 1];
     }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> 52e8a7e133ac800bfbd901e45ab4279a897ff9fe
 char * State::GetState(int inStateCode) const
 {
-    strncpy(_pState, _pStates + (LENGTH * (inStateCode-1)), LENGTH);
-    *(_pState+LENGTH-1) = '\0';
+    _pState[_recordLength] = '\0';
+    memset(_pState, '*', _recordLength);
+
+    if(inStateCode < _minCode || inStateCode > _maxCode)
+        return _pState;
+
+    strncpy(_pState, _pStates + (_recordLength * (inStateCode-_minCode)), _recordLength);
+    *(_pState+LENGTH-_minCode) = '\0';
     return _pState;
 }
-    
-<<<<<<< HEAD
->>>>>>> 52e8a7e133ac800bfbd901e45ab4279a897ff9fe
-=======
->>>>>>> 52e8a7e133ac800bfbd901e45ab4279a897ff9fe
+
+void State::DisplayStates() const
+{
+    const int NUMBERROWS = 17;
+    const int COLUMNWIDTH = 28;
+    const int BUFFERWIDTH = 100;
+    char outputBuffer[NUMBERROWS][BUFFERWIDTH];
+    char singleRecord[_recordLength + 1];
+    int columnPosition;
+    int currentColumn;
+    int currentRow;
+    int i;
+
+    if(_numberStates <= 0)
+    {
+        cerr << "Error! No States to Display" << endl;
+        return;
+    }
+    currentColumn = 0;
+    currentRow = 0;
+    memset(outputBuffer, 0x20, sizeof(outputBuffer));
+
+    for(i = 0; i < _numberStates; i++)
+    {
+        columnPosition = currentColumn * COLUMNWIDTH;
+        snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode);
+        outputBuffer[currentRow][columnPosition+2] = ' ';
+        strncpy(outputBuffer[currentRow]+3, singleRecord, 2); //Writing the Abbreviation
+        outputBuffer[currentRow][columnPosition + 5] = ' ';
+        strncpy(outputBuffer[currentRow]+6,singleRecord+2, _recordLength-2); //Writing the Data Name
+
+        if (i > NUMBERROWS)
+        {
+            currentColumn++;
+            currentRow = 0;
+        }
+
+    }
+}
 State::~State()
 {
     delete [] _pStates;
