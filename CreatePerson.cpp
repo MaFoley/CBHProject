@@ -12,7 +12,7 @@ int main()
     const char OUTFILE[] = "person.db";
     int numberRecords;
 
-    char inBuffer[150];
+    char inBuffer[112];
 
     ifstream inputFile;
     ofstream outputFile;
@@ -42,6 +42,8 @@ int main()
 
     while(true)
     {
+        cerr << "numberRecords: " << numberRecords << endl;
+        cerr << "sizeof(inBuffer): " << sizeof(inBuffer) << endl;
         memset(inBuffer, ' ', sizeof(inBuffer));
         inputFile.getline(inBuffer, sizeof(inBuffer));
 
@@ -49,6 +51,7 @@ int main()
             break;
         outputFile.seekp((numberRecords + 1) * DATALENGTH);
         outputFile.write(inBuffer, DATALENGTH);
+        cerr << inBuffer << endl;
         ++numberRecords;
     }
     outputFile.seekp(0);
