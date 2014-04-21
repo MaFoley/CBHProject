@@ -1,14 +1,20 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include "State.h"
+#include "Color.h"
 
 using namespace std;
 
 void PrintOpt1Menu();
-void UserWait();
+string  UserWait();
+
+
 void option1()
 {
+    State * pState = new State;
+    Color * pColor = new Color;
     bool continueLoop = true;
     string opt;
     while(continueLoop)
@@ -20,12 +26,14 @@ void option1()
            switch(opt[0])
            {
             case '1':
+                pColor ->DisplayColors();
                 UserWait();
                 break;
             case '2':
                 UserWait();
                 break;
             case '3':
+                pState ->DisplayStates();
                 UserWait();
                 break;
             case '4':
@@ -46,6 +54,9 @@ void option1()
                 break;
            }
     }
+
+    delete pState;
+    delete pColor;
 }
 
 void PrintOpt1Menu()
@@ -53,11 +64,11 @@ void PrintOpt1Menu()
      system("clear");
     //Print header
     cout.fill('*');
-    cout.width(16);
+    cout.width(10);
     cout << '*';
     cout << "Police Information System Display Auxiliary Files Sub Menu";
     cout.fill('*');
-    cout.width(16);
+    cout.width(12);
     cout << '*';
     cout << "\n\n";
     //Print Selection choices

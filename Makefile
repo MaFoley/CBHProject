@@ -3,18 +3,19 @@
 #
 CC=g++
 CFLAGS=
-OBJ=cbhproj.o UserWait.o opt1.o opt2.o opt3.o opt4.o opt5.o opt6.o opt7.o 
+OBJ=cbhproj.o UserWait.o opt1.o opt2.o opt3.o opt4.o opt5.o opt6.o opt7.o \
+	Color.o State.o 
 
 cbhproj: $(OBJ)
 	$(CC) -o cbhproj $(OBJ)
 
-cbhproj.o: cbhproj.cpp UserWait.cpp
+cbhproj.o: cbhproj.cpp UserWait.cpp State.cpp
 	$(CC) $(CFLAGS) -c cbhproj.cpp
 
 UserWait.o: UserWait.cpp
 	$(CC) $(CFLAGS) -c UserWait.cpp
 
-opt1.o: opt1.cpp
+opt1.o: opt1.cpp UserWait.cpp Color.cpp State.cpp
 	$(CC) $(CFLAGS) -c opt1.cpp
 
 opt2.o: opt2.cpp

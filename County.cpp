@@ -2,20 +2,20 @@
 #include <fstream>
 #include <cstring>
 #include <cstdio>
-#include "State.h"
+#include "County.h"
 
 using namespace std;
 
-const int MINCODE = 1;
-const int MAXCODE = 51;
-const int LENGTH = 22;
+const int MINCODE = 0;
+const int MAXCODE = 67;
+const int LENGTH = 12;
 
-State::State():
+County::County():
     _minCode(MINCODE),
     _maxCode(MAXCODE),
     _recordLength(LENGTH)
 {
-    char INFILE[] =  "state.db";
+    char INFILE[] =  "county.db";
     ifstream inputFile;
 
     inputFile.open(INFILE);
@@ -26,34 +26,35 @@ State::State():
     else
     {
         inputFile.seekg(0);
-        inputFile.read((char *) &_numberStates, sizeof(_numberStates));
+        inputFile.read((char *) &_numberCountys, sizeof(_numberCountys));
 
-        _pStates = new char[_numberStates * _recordLength];
+        _pCountys = new char[_numberCountys * _recordLength];
 
         inputFile.seekg(LENGTH);
-        inputFile.read(_pStates, _numberStates * _recordLength);
+        inputFile.read(_pCountys, (_numberCountys * _recordLength));
         inputFile.close();
 
-        _pState = new char[ _recordLength + 1];
+        _pCounty = new char[ _recordLength + 1];
     }
 }
-char * State::GetState(int inStateCode) const
+char * County::GetCounty(int inCountyCode) const
 {
-    _pState[_recordLength] = '\0';
-    memset(_pState, '*', _recordLength);
+    _pCounty[_recordLength] = '\0';
+    memset(_pCounty, '*', _recordLength);
 
-    if(inStateCode < _minCode || inStateCode > _maxCode)
-        return _pState;
+    if(inCountyCode < _minCode || inCountyCode > _maxCode)
+        return _pCounty;
 
-    strncpy(_pState, _pStates + (_recordLength * (inStateCode-_minCode)), _recordLength);
-    *(_pState+LENGTH-_minCode) = '\0';
-    return _pState;
+    int offset = _recordLength * (inCountyCode - _minCode);
+    cout << "offset: " << offset << endl;
+    strncpy(_pCounty, _pCountys + (offset), _recordLength);
+    return _pCounty;
 }
 
-void State::DisplayStates() const
+void County::DisplayCountys() const
 {
     const int NUMBERROWS = 17;
-    const int COLUMNWIDTH = 28;
+    const int COLUMNWIDTH = 20;
     const int BUFFERWIDTH = 100;
     char outputBuffer[NUMBERROWS][BUFFERWIDTH];
     char singleRecord[_recordLength + 1];
@@ -62,32 +63,27 @@ void State::DisplayStates() const
     int currentRow;
     int i;
 
-    if(_numberStates <= 0)
+    if(_numberCountys <= 0)
     {
-        cerr << "Error! No States to Display" << endl;
+        cerr << "Error! No Countys to Display" << endl;
         return;
     }
     currentColumn = 0;
     currentRow = 0;
     memset(outputBuffer, ' ', sizeof(outputBuffer));
 
-    for(i = 0; i < _numberStates; i++)
+    for(i = 0; i < _numberCountys; i++)
     {
-        
-
         columnPosition = currentColumn * COLUMNWIDTH;
 
         //Writing the Data Code
         snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode); 
         outputBuffer[currentRow][columnPosition+2] = ' ';
-        strncpy(singleRecord, GetState(i + _minCode), _recordLength);
-
-        //Writing the Abbreviation
-        strncpy(outputBuffer[currentRow]+columnPosition + 3, singleRecord, 2); 
-        outputBuffer[currentRow][columnPosition + 5] = ' ';
+        strncpy(singleRecord, GetCounty(i + _minCode), _recordLength);
 
         //Writing the Data Name
-        strncpy(outputBuffer[currentRow]+ columnPosition + 6, singleRecord+2, _recordLength-2); 
+        strncpy(outputBuffer[currentRow]+ columnPosition + 3, singleRecord, 
+                _recordLength); 
         currentRow++;
         
         if (currentRow > NUMBERROWS - 1)
@@ -107,9 +103,9 @@ void State::DisplayStates() const
     }
 
 }
-State::~State()
+County::~County()
 {
-    delete [] _pStates;
-    delete [] _pState;
+    delete [] _pCountys;
+    delete [] _pCounty;
 }
 

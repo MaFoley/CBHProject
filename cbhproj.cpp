@@ -28,7 +28,6 @@ int main ()
         {
             case '1':
                 option1();
-                UserWait();
                 break;
             case '2':
                 option2();

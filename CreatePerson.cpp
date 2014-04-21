@@ -42,8 +42,6 @@ int main()
 
     while(true)
     {
-        cerr << "numberRecords: " << numberRecords << endl;
-        cerr << "sizeof(inBuffer): " << sizeof(inBuffer) << endl;
         memset(inBuffer, ' ', sizeof(inBuffer));
         inputFile.getline(inBuffer, sizeof(inBuffer));
 
