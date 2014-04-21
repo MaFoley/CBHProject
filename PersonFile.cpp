@@ -6,25 +6,27 @@
 
 using namespace std;
 
-PersonFile::PersonFile()
+PersonFile::PersonFile():
+    _currentRecordNumber(0)
 {
-    char INFILE[] =  "Person.db";
-    ifstream inputFile;
+    char INFILE[] =  "person.db";
 
-    inputFile.open(INFILE);
-    if( !inputFile)
+    _personFile.open(INFILE);
+
+    if( !_personFile)
     {
         cerr << "Error opening file: " << INFILE << endl;
     }
     else
     {
-        inputFile.seekg(0);
-        inputFile.read((char *) &_numberPersons, sizeof(_numberPersons));
+        cout << INFILE << " successfully opened..." << endl;
+        _personFile.seekg(0);
+        _personFile.read((char *) &_numberPersons, sizeof(_numberPersons));
     }
 }
 
 PersonFile::~PersonFile()
 {
-    inputFile.close();
+    _personFile.close();
 }
 

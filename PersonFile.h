@@ -1,5 +1,8 @@
 #include <fstream>
 #include <string>
+#include <cstdio>
+
+using namespace std;
 
 class PersonFile
 {
@@ -12,5 +15,5 @@ private:
     int _numberPersons;
     int _recordLength;
     int _currentRecordNumber;
-    fstream _personFile;
+    ifstream _personFile;
 };

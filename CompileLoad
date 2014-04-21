@@ -8,3 +8,5 @@ echo 'CreateVType:'
 g++ -o CreateVType CreateVType.cpp
 echo 'CreateState:'
 g++ -o CreateState CreateState.cpp
+echo 'CreatePerson:'
+g++ -o CreatePerson CreatePerson.cpp

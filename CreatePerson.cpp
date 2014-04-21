@@ -15,7 +15,7 @@ int main()
     char inBuffer[150];
 
     ifstream inputFile;
-    ofstream _personFile;
+    ofstream outputFile;
 
     inputFile.open(INFILE);
 
@@ -24,15 +24,17 @@ int main()
         cerr << "Problem opening input file: " << INFILE << endl;
         return -1;
     }
+    cout << INFILE << " successfully opened..." << endl;
 
-    _personFile.open(OUTFILE);
+    outputFile.open(OUTFILE);
 
-    if(!_personFile)
+    if(!outputFile)
     {
         cerr << "Problem opening output file: " << OUTFILE << endl;
         inputFile.close();
         return -2;
     }
+    cout << OUTFILE << " successfully opened..." << endl;
 
     numberRecords = 0;
 
@@ -45,18 +47,18 @@ int main()
 
         if(inputFile.eof())
             break;
-        _personFile.seekp((numberRecords + 1) * DATALENGTH);
-        _personFile.write(inBuffer, DATALENGTH);
+        outputFile.seekp((numberRecords + 1) * DATALENGTH);
+        outputFile.write(inBuffer, DATALENGTH);
         ++numberRecords;
     }
-    _personFile.seekp(0);
-    _personFile.write((char *) &numberRecords, sizeof(numberRecords));
+    outputFile.seekp(0);
+    outputFile.write((char *) &numberRecords, sizeof(numberRecords));
 
-    _personFile.seekp(DATALENGTH);
-    _personFile.write(inBuffer, sizeof(inBuffer));
+    outputFile.seekp(DATALENGTH);
+    outputFile.write(inBuffer, sizeof(inBuffer));
 
     inputFile.close();
-    _personFile.close();
+    outputFile.close();
 
     cout << "Number of valid records written to " << OUTFILE << ": " << numberRecords << endl;
 
