@@ -73,6 +73,7 @@ void PersonFile::SortBySSN()
             _personFile.write(input2, _recordSize);
             _personFile.seekp((i+1) * _recordSize);
             _personFile.write(input1, _recordSize);
+            sorted = false;
         }
     }
     ++numPass;
