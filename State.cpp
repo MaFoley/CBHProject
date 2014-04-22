@@ -99,9 +99,11 @@ void State::DisplayStates() const
         
 
     }
+    cout << "\n\n" ;
 
     for(i = 0; i < NUMBERROWS; i++)
     {
+        cout << "\t";
         cout.write(outputBuffer[i], BUFFERWIDTH);
         cout << endl;
     }

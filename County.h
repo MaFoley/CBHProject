@@ -6,15 +6,15 @@ class County
         int GetMinCode() const {return _minCode; }
         int GetMaxCode() const { return _maxCode; }
         int GetRecordLength() const { return _recordLength; }
-        int GetNumberCountys() const { return _numberCountys; }
-        char * GetCountys() const { return _pCountys; }
+        int GetNumberCounties() const { return _numberCounties; }
+        char * GetCounties() const { return _pCounties; }
         char * GetCounty(int inCountyCode) const;
-        void DisplayCountys() const;
+        void DisplayCounties() const;
     private:
         int _minCode;
         int _maxCode;
         int _recordLength;
-        int _numberCountys;
-        char * _pCountys;
+        int _numberCounties;
+        char * _pCounties;
         char * _pCounty;
 };

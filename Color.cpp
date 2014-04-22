@@ -73,10 +73,6 @@ void Color::DisplayColors() const
 
     for(i = 0; i < _numberColors; i++)
     {
-        cerr << "columnPosition: " << columnPosition << endl;
-        cerr << "currentColumn: " << currentColumn << endl;
-        
-
         columnPosition = currentColumn * COLUMNWIDTH;
 
         //Writing the Data Code
@@ -103,8 +99,11 @@ void Color::DisplayColors() const
 
     }
 
+    cout << "\n\n";
+
     for(i = 0; i < NUMBERROWS; i++)
     {
+        cout << "\t\t";
         cout.write(outputBuffer[i], BUFFERWIDTH);
         cout << endl;
     }

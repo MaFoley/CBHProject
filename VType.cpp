@@ -2,20 +2,20 @@
 #include <fstream>
 #include <cstring>
 #include <cstdio>
-#include "County.h"
+#include "VType.h"
 
 using namespace std;
 
-const int MINCODE = 0;
-const int MAXCODE = 67;
-const int LENGTH = 12;
+const int MINCODE = 1;
+const int MAXCODE = 15;
+const int LENGTH = 15;
 
-County::County():
+VType::VType():
     _minCode(MINCODE),
     _maxCode(MAXCODE),
     _recordLength(LENGTH)
 {
-    char INFILE[] =  "county.db";
+    char INFILE[] =  "vtype.db";
     ifstream inputFile;
 
     inputFile.open(INFILE);
@@ -26,35 +26,35 @@ County::County():
     else
     {
         inputFile.seekg(0);
-        inputFile.read((char *) &_numberCounties, sizeof(_numberCounties));
+        inputFile.read((char *) &_numberVTypes, sizeof(_numberVTypes));
 
-        _pCounties = new char[_numberCounties * _recordLength];
+        _pVTypes = new char[_numberVTypes * _recordLength];
 
         inputFile.seekg(LENGTH);
-        inputFile.read(_pCounties, (_numberCounties * _recordLength));
+        inputFile.read(_pVTypes, (_numberVTypes * _recordLength));
         inputFile.close();
 
-        _pCounty = new char[ _recordLength + 1];
+        _pVType = new char[ _recordLength + 1];
     }
 }
-char * County::GetCounty(int inCountyCode) const
+char * VType::GetVType(int inVTypeCode) const
 {
-    _pCounty[_recordLength] = '\0';
-    memset(_pCounty, '*', _recordLength);
+    _pVType[_recordLength] = '\0';
+    memset(_pVType, '*', _recordLength);
 
-    if(inCountyCode < _minCode || inCountyCode > _maxCode)
-        return _pCounty;
+    if(inVTypeCode < _minCode || inVTypeCode > _maxCode)
+        return _pVType;
 
-    int offset = _recordLength * (inCountyCode - _minCode);
-    strncpy(_pCounty, _pCounties + (offset), _recordLength);
-    return _pCounty;
+    int offset = _recordLength * (inVTypeCode - _minCode);
+    strncpy(_pVType, _pVTypes + (offset), _recordLength);
+    return _pVType;
 }
 
-void County::DisplayCounties() const
+void VType::DisplayVTypes() const
 {
-    const int NUMBERROWS = 17;
+    const int NUMBERROWS = 8;
     const int COLUMNWIDTH = 20;
-    const int BUFFERWIDTH = 100;
+    const int BUFFERWIDTH = 50;
     char outputBuffer[NUMBERROWS][BUFFERWIDTH];
     char singleRecord[_recordLength + 1];
     int columnPosition;
@@ -62,23 +62,23 @@ void County::DisplayCounties() const
     int currentRow;
     int i;
 
-    if(_numberCounties <= 0)
+    if(_numberVTypes <= 0)
     {
-        cerr << "Error! No Counties to Display" << endl;
+        cerr << "Error! No VTypes to Display" << endl;
         return;
     }
     currentColumn = 0;
     currentRow = 0;
     memset(outputBuffer, ' ', sizeof(outputBuffer));
 
-    for(i = 0; i < _numberCounties; i++)
+    for(i = 0; i < _numberVTypes; i++)
     {
         columnPosition = currentColumn * COLUMNWIDTH;
 
         //Writing the Data Code
         snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode); 
         outputBuffer[currentRow][columnPosition+2] = ' ';
-        strncpy(singleRecord, GetCounty(i + _minCode), _recordLength);
+        strncpy(singleRecord, GetVType(i + _minCode), _recordLength);
 
         //Writing the Data Name
         strncpy(outputBuffer[currentRow]+ columnPosition + 3, singleRecord, 
@@ -92,20 +92,21 @@ void County::DisplayCounties() const
         }
 
     }
+
     cout << "\n\n";
 
     for(i = 0; i < NUMBERROWS; i++)
     {
-        cout << "\t";
+        cout << "\t\t\t" ;
         cout.write(outputBuffer[i], BUFFERWIDTH);
-        cout << endl;
+        cout << endl << endl;
     }
 
 }
 
-County::~County()
+VType::~VType()
 {
-    delete [] _pCounties;
-    delete [] _pCounty;
+    delete [] _pVTypes;
+    delete [] _pVType;
 }
 

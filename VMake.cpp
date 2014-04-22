@@ -2,20 +2,20 @@
 #include <fstream>
 #include <cstring>
 #include <cstdio>
-#include "County.h"
+#include "VMake.h"
 
 using namespace std;
 
-const int MINCODE = 0;
-const int MAXCODE = 67;
-const int LENGTH = 12;
+const int MINCODE = 1;
+const int MAXCODE = 51;
+const int LENGTH = 11;
 
-County::County():
+VMake::VMake():
     _minCode(MINCODE),
     _maxCode(MAXCODE),
     _recordLength(LENGTH)
 {
-    char INFILE[] =  "county.db";
+    char INFILE[] =  "vmake.db";
     ifstream inputFile;
 
     inputFile.open(INFILE);
@@ -26,35 +26,35 @@ County::County():
     else
     {
         inputFile.seekg(0);
-        inputFile.read((char *) &_numberCounties, sizeof(_numberCounties));
+        inputFile.read((char *) &_numberVMakes, sizeof(_numberVMakes));
 
-        _pCounties = new char[_numberCounties * _recordLength];
+        _pVMakes = new char[_numberVMakes * _recordLength];
 
         inputFile.seekg(LENGTH);
-        inputFile.read(_pCounties, (_numberCounties * _recordLength));
+        inputFile.read(_pVMakes, (_numberVMakes * _recordLength));
         inputFile.close();
 
-        _pCounty = new char[ _recordLength + 1];
+        _pVMake = new char[ _recordLength + 1];
     }
 }
-char * County::GetCounty(int inCountyCode) const
+char * VMake::GetVMake(int inVMakeCode) const
 {
-    _pCounty[_recordLength] = '\0';
-    memset(_pCounty, '*', _recordLength);
+    _pVMake[_recordLength] = '\0';
+    memset(_pVMake, '*', _recordLength);
 
-    if(inCountyCode < _minCode || inCountyCode > _maxCode)
-        return _pCounty;
+    if(inVMakeCode < _minCode || inVMakeCode > _maxCode)
+        return _pVMake;
 
-    int offset = _recordLength * (inCountyCode - _minCode);
-    strncpy(_pCounty, _pCounties + (offset), _recordLength);
-    return _pCounty;
+    int offset = _recordLength * (inVMakeCode - _minCode);
+    strncpy(_pVMake, _pVMakes + (offset), _recordLength);
+    return _pVMake;
 }
 
-void County::DisplayCounties() const
+void VMake::DisplayVMakes() const
 {
     const int NUMBERROWS = 17;
     const int COLUMNWIDTH = 20;
-    const int BUFFERWIDTH = 100;
+    const int BUFFERWIDTH = 80;
     char outputBuffer[NUMBERROWS][BUFFERWIDTH];
     char singleRecord[_recordLength + 1];
     int columnPosition;
@@ -62,23 +62,23 @@ void County::DisplayCounties() const
     int currentRow;
     int i;
 
-    if(_numberCounties <= 0)
+    if(_numberVMakes <= 0)
     {
-        cerr << "Error! No Counties to Display" << endl;
+        cerr << "Error! No VMakes to Display" << endl;
         return;
     }
     currentColumn = 0;
     currentRow = 0;
     memset(outputBuffer, ' ', sizeof(outputBuffer));
 
-    for(i = 0; i < _numberCounties; i++)
+    for(i = 0; i < _numberVMakes; i++)
     {
         columnPosition = currentColumn * COLUMNWIDTH;
 
         //Writing the Data Code
         snprintf(outputBuffer[currentRow] + columnPosition, 3, "%02d", i + _minCode); 
         outputBuffer[currentRow][columnPosition+2] = ' ';
-        strncpy(singleRecord, GetCounty(i + _minCode), _recordLength);
+        strncpy(singleRecord, GetVMake(i + _minCode), _recordLength);
 
         //Writing the Data Name
         strncpy(outputBuffer[currentRow]+ columnPosition + 3, singleRecord, 
@@ -92,20 +92,21 @@ void County::DisplayCounties() const
         }
 
     }
+
     cout << "\n\n";
 
     for(i = 0; i < NUMBERROWS; i++)
     {
-        cout << "\t";
+        cout << "\t\t";
         cout.write(outputBuffer[i], BUFFERWIDTH);
-        cout << endl;
+        cout << endl << endl;
     }
 
 }
 
-County::~County()
+VMake::~VMake()
 {
-    delete [] _pCounties;
-    delete [] _pCounty;
+    delete [] _pVMakes;
+    delete [] _pVMake;
 }
 
