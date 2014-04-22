@@ -2,17 +2,20 @@
 #include <cstring>
 #include <cstdlib>
 #include <fstream>
+#include "PersonFile.h"
 
 using namespace std;
 const int DATALENGTH = 111;
 
 int main()
 {
+    PersonFile * pPersonFile = new PersonFile;
     const char INFILE[] = "person.data";
     const char OUTFILE[] = "person.db";
     int numberRecords;
+    int offset;
 
-    char inBuffer[112];
+    char inBuffer[150];
 
     ifstream inputFile;
     ofstream outputFile;
@@ -47,21 +50,23 @@ int main()
 
         if(inputFile.eof())
             break;
-        outputFile.seekp((numberRecords + 1) * DATALENGTH);
+        offset = (numberRecords + 1) * DATALENGTH;
+        outputFile.seekp(offset);
+        cerr << "offset: " << offset << endl;
         outputFile.write(inBuffer, DATALENGTH);
-        cerr << inBuffer << endl;
         ++numberRecords;
     }
     outputFile.seekp(0);
     outputFile.write((char *) &numberRecords, sizeof(numberRecords));
 
-    outputFile.seekp(DATALENGTH);
-    outputFile.write(inBuffer, sizeof(inBuffer));
-
     inputFile.close();
     outputFile.close();
 
     cout << "Number of valid records written to " << OUTFILE << ": " << numberRecords << endl;
+    cout << "Sorting..." << endl;
+    pPersonFile -> SortBySSN();
+    cout << "Sorted!" << endl;
 
+    delete pPersonFile;
     return 0;
 }

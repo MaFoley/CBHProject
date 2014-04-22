@@ -11,9 +11,10 @@ public:
     ~PersonFile();
     int GetNumberPersons() const { return _numberPersons; }
     int GetCurrentRecordNumber() const { return _currentRecordNumber; }
+    void SortBySSN();
 private:
     int _numberPersons;
-    int _recordLength;
+    int _recordSize;
     int _currentRecordNumber;
-    ifstream _personFile;
+    fstream _personFile;
 };
