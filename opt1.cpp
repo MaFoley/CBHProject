@@ -1,13 +1,16 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
-#include <string>
 #include "State.h"
 #include "Color.h"
+#include "County.h"
+#include "VMake.h"
+#include "VType.h"
 
 using namespace std;
 
 void PrintOpt1Menu();
+void PrintAuxiliarySubHdg( string AuxName);
 string  UserWait();
 
 
@@ -15,6 +18,9 @@ void option1()
 {
     State * pState = new State;
     Color * pColor = new Color;
+    County * pCounty = new County;
+    VMake * pVMake = new VMake;
+    VType * pVType = new VType;
     bool continueLoop = true;
     string opt;
     while(continueLoop)
@@ -26,20 +32,28 @@ void option1()
            switch(opt[0])
            {
             case '1':
+                PrintAuxiliarySubHdg("Color");
                 pColor ->DisplayColors();
                 UserWait();
                 break;
             case '2':
+                PrintAuxiliarySubHdg("County");
+                pCounty ->DisplayCounties();
                 UserWait();
                 break;
             case '3':
+                PrintAuxiliarySubHdg("State");
                 pState ->DisplayStates();
                 UserWait();
                 break;
             case '4':
+                PrintAuxiliarySubHdg("VMake");
+                pVMake ->DisplayVMakes();
                 UserWait();
                 break;
             case '5':
+                PrintAuxiliarySubHdg("VType");
+                pVType ->DisplayVTypes();
                 UserWait();
                 break;
             case 'q':
@@ -55,8 +69,11 @@ void option1()
            }
     }
 
-    delete pState;
     delete pColor;
+    delete pCounty;
+    delete pState;
+    delete pVMake;
+    delete pVType;
 }
 
 void PrintOpt1Menu()
@@ -84,3 +101,18 @@ void PrintOpt1Menu()
     cout << '*';
     cout <<"\n\n\t\t\tEnter a Selection: ";
 }
+
+void PrintAuxiliarySubHdg(string AuxName)
+{
+    system("clear");
+    //Print header
+    cout.fill('*');
+    cout.width(10);
+    cout << '*';
+    cout << "Police Information System Display Auxiliary Files Sub Menu";
+    cout.fill('*');
+    cout.width(12);
+    cout << '*';
+    cout << "\n\n";
+    cout << "\t\t\t Displaying Codes For: " << AuxName;
+ }
