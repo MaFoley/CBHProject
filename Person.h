@@ -8,9 +8,13 @@ class Person
     public:
         Person();
         ~Person() {}
+
+        void MakePerson(const string & inRecord);
+//        string Person::Recordify();
+//
+        //All the gets
         const string & GetSSN() const { return _SSN;}
         string GetSSNWithHyphens() const { return SSNHyphens(_SSN); }
-
         const string & GetOLN() const { return _OLN;}
         const string & GetStateCode() const { return _stateCode;}
         const string & GetCountyCode() const { return _countyCode;}
@@ -22,17 +26,18 @@ class Person
         const string & GetZip() const { return _zip;}
 
         //Note that _SSN is ALWAYS stored without hyphens
-        void SetSSN(const & inSSN) { _SSN = SSNNoHyphens(inSSN); }
-        void SetOLN(const string & inOLN) { _OLN = inOLN; }
-        void SetStateCode(const string & inStateCode) { _stateCode = inStateCode; }
-        void SetCountyCode(const string & inCountyCode) { _countyCode = inCountyCode; }
-        void SetlastName(const string & inLastName) { _lastName = inLastName; }
-        void SetFirstName(const string & inFirstName) { _firstName = inFirstName; }
-        void SetMI(const string & inMI) { _MI = inMI; }
-        void Setstreet(const string & instreet) { _street = instreet; }
-        void Setcity(const string & incity) { _city = incity; }
-        void Setzip(const string & inzip) { _zip = inzip; }
+        //These are all the sets
+        void SetSSN(const string & inSSN) { _SSN = SSNNoHyphens(inSSN); }
 
+        void SetOLN(const string & inOLN);
+        void SetStateCode(const string & inStateCode);
+        void SetCountyCode(const string & inCountyCode);
+        void SetLastName(const string & inLastName);
+        void SetFirstName(const string & inFirstName);
+        void SetMI(const string & inMI);
+        void SetStreet(const string & instreet);
+        void SetCity(const string & incity);
+        void SetZip(const string & inzip);
 
     private:
         string _SSN;
@@ -49,3 +54,5 @@ class Person
         bool _found;
         bool _deleted;
         
+};
+
