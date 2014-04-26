@@ -100,12 +100,24 @@ void Person::DisplayPerson()
 {
     int i;
     char outBuffer[][82] = {
-        "SSN: $$$-$$-$$$$                                                                 ",
-        "01                                                                               ",
-        "02                                                                               "
-    }; //01234567890123456789012345678901245678901234567890123456789012345678901234567890
+       //012345678901234567890123456789012345678901234567890123456789012345678901234567890
+        "SSN: $$$-$$-$$$$  LASTNAME********* FIRSTNAME*** M                               ",
+        "OLN: *********    STREET************************     (XX) STATE                  ",
+        "02                CITY*************** ZIP*******     (XX) COUNTY                 "
+    }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
 
     strncpy(outBuffer[0]+5, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
+    strncpy(outBuffer[0]+18, _lastName.c_str(), LASTNAMELENGTH);
+    strncpy(outBuffer[0]+36, _firstName.c_str(), FIRSTNAMELENGTH);
+    strncpy(outBuffer[0]+49, _MI.c_str(), MILENGTH);
+
+    strncpy(outBuffer[1]+5, _OLN.c_str(), OLNLENGTH);
+    strncpy(outBuffer[1]+18, _street.c_str(), STREETLENGTH);
+    strncpy(outBuffer[1]+54, _stateCode.c_str(), STATECODELENGTH);
+
+    strncpy(outBuffer[2]+18, _city.c_str(), CITYLENGTH);
+    strncpy(outBuffer[2]+38, _zip.c_str(), ZIPLENGTH);
+    strncpy(outBuffer[2]+54, _countyCode.c_str(), COUNTYCODELENGTH);
 
     for(i = 0; i < 3; i++)
     {
