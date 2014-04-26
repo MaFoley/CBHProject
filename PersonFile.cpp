@@ -10,8 +10,7 @@ const int RECORDSIZE = 111;
 string SSNNoHyphens(const string &);
 
 PersonFile::PersonFile():
-    _recordSize(RECORDSIZE),
-    _currentRecordNumber(0)
+    _recordSize(RECORDSIZE)
 {
     char PERSONFILE[] =  "person.db";
     int initZero = 0;
@@ -39,7 +38,6 @@ PersonFile::PersonFile():
     }
     else
     {
-        cout << PERSONFILE << " successfully opened..." << endl;
         _personFile.seekg(0);
         _personFile.read((char *) &_numberPersons, sizeof(_numberPersons));
     }
@@ -121,3 +119,29 @@ Person PersonFile::SearchBySSN(const string & aSSN)
     }
 }
 
+Person PersonFile::SearchByOLN(const string & aOLN)
+{
+    int icompare;
+    char dataRecord[RECORDSIZE];
+    string olnSearch;
+    Person foundPerson;
+
+    foundPerson.SetFound(false);
+
+    for(int searchRecord = 1; searchRecord <= _numberPersons; ++searchRecord)
+    {
+        cout << "searchRecord: " << searchRecord << endl;
+        _personFile.seekg(searchRecord*RECORDSIZE);
+        _personFile.read(dataRecord,RECORDSIZE);
+        icompare =  strncmp(olnSearch.c_str(), dataRecord+9 ,olnSearch.length());
+
+        if(icompare == 0)
+        {
+            _currentRecordNumber = searchRecord;
+            foundPerson.MakePerson(dataRecord);
+            if(foundPerson.IsDeleted())
+                foundPerson.SetFound(false);
+            return foundPerson;
+        }
+    }
+}

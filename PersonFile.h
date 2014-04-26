@@ -14,6 +14,7 @@ public:
     int GetCurrentRecordNumber() const { return _currentRecordNumber; }
     void SortBySSN();
     Person SearchBySSN(const string & inSSN);
+    Person SearchByOLN(const string & inOLN);
 private:
     int _numberPersons;
     int _recordSize;

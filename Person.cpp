@@ -44,6 +44,56 @@ void Person::MakePerson(const string & inRecord)
     _deleted = (inRecord[RECORDSIZE -1] == '1') ? true : false;
 }
 
+string Person::Recordify()
+{
+    string data;
+    int len;
+
+    data.assign(_length, 0x20);
+
+    len = _SSN.length() < SSNLENGTH ?
+        _SSN.length() : SSNLENGTH;
+    data.replace(0, len, _SSN);
+
+    len = _OLN.length() < OLNLENGTH ?
+        _OLN.length() : OLNLENGTH;
+    data.replace(9, len, _OLN);
+
+    len = _stateCode.length() < STATECODELENGTH ?
+        _stateCode.length() : STATECODELENGTH;
+    data.replace(18, len, _stateCode);
+
+    len = _countyCode.length() < COUNTYCODELENGTH ?
+        _countyCode.length() : COUNTYCODELENGTH;
+    data.replace(20, len, _countyCode);
+
+    len = _lastName.length() < LASTNAMELENGTH ?
+        _lastName.length() : LASTNAMELENGTH;
+    data.replace(22, len, _lastName);
+
+    len = _firstName.length() < FIRSTNAMELENGTH ?
+        _firstName.length() : FIRSTNAMELENGTH;
+    data.replace(39, len, _firstName);
+
+    len = _MI.length() < MILENGTH ?
+        _MI.length() : MILENGTH;
+    data.replace(51, len, _MI);
+
+    len = _street.length() < STREETLENGTH ?
+        _street.length() : STREETLENGTH;
+    data.replace(52, len, _street);
+    
+    len = _city.length() < CITYLENGTH ?
+        _city.length() : CITYLENGTH;
+    data.replace(82, len, _city);
+
+    len = _zip.length() < ZIPLENGTH ?
+        _zip.length() : ZIPLENGTH;
+    data.replace(101, len, _zip);
+    data[RECORDSIZE-1] = _deleted ? '1' : '0';
+
+    return data;
+}
 //void Person::Recordify()
 
 void Person::DisplayPerson()
@@ -105,24 +155,18 @@ void Person::SetMI(const string & inMI)
     _MI.assign(inMI, 0, len);
 }
 
-void Person::SetStreet(const string & inStreet)
-{
-    int len = inStreet.length() < STREETLENGTH ?
-        inStreet.length() : STREETLENGTH;
-    _street.assign(inStreet, 0, len);
-}
-
-void Person::SetCity(const string & inCity)
-{
-    int len = inCity.length() < CITYLENGTH ?
-        inCity.length() : CITYLENGTH;
-    _city.assign(inCity, 0, len);
-}
-void Person::SetZip(const string & inZip)
-{
-    int len = inZip.length() < ZIPLENGTH ?
-        inZip.length() : ZIPLENGTH;
-    _zip.assign(inZip, 0, len);
-}
 
 
+/*
+const int SSNLENGTH = 9;
+const int OLNLENGTH = 9;
+const int STATECODELENGTH = 2;
+const int COUNTYCODELENGTH = 2;
+const int LASTNAMELENGTH = 17;
+const int FIRSTNAMELENGTH = 12;
+const int MILENGTH = 1;
+const int STREETLENGTH = 30;
+const int CITYLENGTH = 19;
+const int ZIPLENGTH = 9;
+const int RECORDSIZE = 111;
+*/

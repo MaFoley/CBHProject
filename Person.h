@@ -10,7 +10,7 @@ class Person
         ~Person() {}
 
         void MakePerson(const string & inRecord);
-//        string Person::Recordify();
+        string Recordify();
         void DisplayPerson();
 //
         //All the gets
