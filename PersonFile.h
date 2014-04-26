@@ -1,6 +1,7 @@
 #include <fstream>
 #include <string>
 #include <cstdio>
+#include "Person.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ public:
     int GetNumberPersons() const { return _numberPersons; }
     int GetCurrentRecordNumber() const { return _currentRecordNumber; }
     void SortBySSN();
+    Person SearchBySSN(const string & inSSN);
 private:
     int _numberPersons;
     int _recordSize;

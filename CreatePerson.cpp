@@ -52,7 +52,6 @@ int main()
             break;
         offset = (numberRecords + 1) * DATALENGTH;
         outputFile.seekp(offset);
-        cerr << "offset: " << offset << endl;
         outputFile.write(inBuffer, DATALENGTH);
         ++numberRecords;
     }

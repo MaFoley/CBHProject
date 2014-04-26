@@ -9,4 +9,4 @@ g++ -o CreateVType CreateVType.cpp
 echo 'CreateState:'
 g++ -o CreateState CreateState.cpp
 echo 'CreatePerson:'
-g++ -o CreatePerson CreatePerson.cpp PersonFile.cpp
+g++ -o CreatePerson CreatePerson.cpp PersonFile.cpp Person.cpp SSNNoHyphens.cpp

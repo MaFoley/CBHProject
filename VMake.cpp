@@ -99,7 +99,7 @@ void VMake::DisplayVMakes() const
     {
         cout << "\t\t";
         cout.write(outputBuffer[i], BUFFERWIDTH);
-        cout << endl << endl;
+        cout << endl;
     }
 
 }

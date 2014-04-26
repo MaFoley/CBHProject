@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <cstring>
 #include <cstdio>
 #include "PersonFile.h"
 
 using namespace std;
 const int RECORDSIZE = 111;
+string SSNNoHyphens(const string &);
 
 PersonFile::PersonFile():
     _recordSize(RECORDSIZE),
@@ -81,5 +83,41 @@ void PersonFile::SortBySSN()
 PersonFile::~PersonFile()
 {
     _personFile.close();
+}
+
+Person PersonFile::SearchBySSN(const string & aSSN)
+{
+    int first;
+    int last;
+    int midpoint;
+    int icompare;
+    char dataRecord[RECORDSIZE];
+    string ssnSearch;
+    Person foundPerson;
+
+    foundPerson.SetFound(false);
+    ssnSearch = SSNNoHyphens(aSSN);
+    first=1;
+    last=_numberPersons;
+
+    while(true)
+    {
+        if(first > last) return foundPerson;
+        midpoint=(first+last)/2;
+        _personFile.seekg(midpoint*RECORDSIZE);
+        _personFile.read(dataRecord,RECORDSIZE);
+        icompare =  strncmp(ssnSearch.c_str(),dataRecord,9);
+
+        if(icompare < 0) last=midpoint-1;
+        if(icompare > 0) first=midpoint+1;
+        if(icompare == 0)
+        {
+            _currentRecordNumber=midpoint+1;
+            foundPerson.MakePerson(dataRecord);
+            if(foundPerson.IsDeleted())
+                foundPerson.SetFound(false);
+            return foundPerson;
+        }
+    }
 }
 
