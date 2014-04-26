@@ -3,6 +3,8 @@
 #include <cstring>
 #include <cstdlib>
 #include "Person.h"
+#include "County.h"
+#include "State.h"
 
 using namespace std;
 
@@ -98,13 +100,27 @@ string Person::Recordify()
 
 void Person::DisplayPerson()
 {
+    const int COUNTYLENGTH = 12;
+    const int STATELENGTH = 22;
     int i;
+    State newState;
+    County newCounty;
+    int intStateCode;
+    int intCountyCode;
+    string StateName;
+    string CountyName;
+
     char outBuffer[][82] = {
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
         "SSN: $$$-$$-$$$$  LASTNAME********* FIRSTNAME*** M                               ",
         "OLN: *********    STREET************************     (XX) STATE                  ",
         "02                CITY*************** ZIP*******     (XX) COUNTY                 "
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
+
+    intStateCode = atoi(_stateCode.c_str()); 
+    intCountyCode = atoi(_countyCode.c_str()); 
+    StateName = newState.GetState(intStateCode);
+    CountyName = newCounty.GetCounty(intCountyCode);
 
     strncpy(outBuffer[0]+5, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
     strncpy(outBuffer[0]+18, _lastName.c_str(), LASTNAMELENGTH);
@@ -114,15 +130,17 @@ void Person::DisplayPerson()
     strncpy(outBuffer[1]+5, _OLN.c_str(), OLNLENGTH);
     strncpy(outBuffer[1]+18, _street.c_str(), STREETLENGTH);
     strncpy(outBuffer[1]+54, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[1]+58, StateName.c_str()+ 2, STATELENGTH);
 
     strncpy(outBuffer[2]+18, _city.c_str(), CITYLENGTH);
     strncpy(outBuffer[2]+38, _zip.c_str(), ZIPLENGTH);
     strncpy(outBuffer[2]+54, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[2]+58, CountyName.c_str(), COUNTYLENGTH);
 
     for(i = 0; i < 3; i++)
     {
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
-        cout << endl;
+        cout << endl << endl;
     }
 }
 
