@@ -6,6 +6,10 @@
 
 using namespace std;
 
+string SSNHyphens(const string &);
+
+
+
 const int SSNLENGTH = 9;
 const int OLNLENGTH = 9;
 const int STATECODELENGTH = 2;
@@ -38,6 +42,26 @@ void Person::MakePerson(const string & inRecord)
     
     //ie if the last bit is 1, deleted = true
     _deleted = (inRecord[RECORDSIZE -1] == '1') ? true : false;
+}
+
+//void Person::Recordify()
+
+void Person::DisplayPerson()
+{
+    int i;
+    char outBuffer[][82] = {
+        "SSN: $$$-$$-$$$$                                                                 ",
+        "01                                                                               ",
+        "02                                                                               "
+    }; //01234567890123456789012345678901245678901234567890123456789012345678901234567890
+
+    strncpy(outBuffer[0]+5, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
+
+    for(i = 0; i < 3; i++)
+    {
+        cout.write(outBuffer[i], sizeof(outBuffer[i]));
+        cout << endl;
+    }
 }
 
 

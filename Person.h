@@ -11,6 +11,7 @@ class Person
 
         void MakePerson(const string & inRecord);
 //        string Person::Recordify();
+        void DisplayPerson();
 //
         //All the gets
         const string & GetSSN() const { return _SSN;}

@@ -4,7 +4,7 @@
 CC=g++
 CFLAGS=
 OBJ=cbhproj.o UserWait.o opt1.o opt2.o opt3.o opt4.o opt5.o opt6.o opt7.o \
-	Color.o State.o 
+	Color.o County.o State.o VMake.o VType.o Upper.o SSNHyphens.o SSNNoHyphens.o
 
 cbhproj: $(OBJ)
 	$(CC) -o cbhproj $(OBJ)
@@ -15,7 +15,7 @@ cbhproj.o: cbhproj.cpp UserWait.cpp State.cpp
 UserWait.o: UserWait.cpp
 	$(CC) $(CFLAGS) -c UserWait.cpp
 
-opt1.o: opt1.cpp UserWait.cpp Color.cpp State.cpp
+opt1.o: opt1.cpp UserWait.cpp Color.cpp County.cpp State.cpp VMake.cpp VType.cpp
 	$(CC) $(CFLAGS) -c opt1.cpp
 
 opt2.o: opt2.cpp
