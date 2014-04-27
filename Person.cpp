@@ -9,6 +9,7 @@
 using namespace std;
 
 string SSNHyphens(const string &);
+string ZipHyphens(const string &);
 
 
 
@@ -100,6 +101,11 @@ string Person::Recordify()
 
 void Person::DisplayPerson()
 {
+    if(_found == false || _deleted == true)
+    {
+        cout << "Record not found!" << endl;
+        return;
+    }
     const int COUNTYLENGTH = 12;
     const int STATELENGTH = 22;
     int i;
@@ -112,9 +118,9 @@ void Person::DisplayPerson()
 
     char outBuffer[][82] = {
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "SSN: $$$-$$-$$$$  LASTNAME********* FIRSTNAME*** M                               ",
-        "OLN: *********    STREET************************     (XX) STATE                  ",
-        "02                CITY*************** ZIP*******     (XX) COUNTY                 "
+        "SSN: $$$-$$-$$$$  NAME: LASTNAME********* FIRSTNAME*** M                         ",//00
+        "OLN: *********          STREET************************   STATE: (XX) ST          ",//01
+        "                        CITY*************** ZIP*******  COUNTY: (XX) COUNTY******" //02
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
 
     intStateCode = atoi(_stateCode.c_str()); 
@@ -123,19 +129,19 @@ void Person::DisplayPerson()
     CountyName = newCounty.GetCounty(intCountyCode);
 
     strncpy(outBuffer[0]+5, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
-    strncpy(outBuffer[0]+18, _lastName.c_str(), LASTNAMELENGTH);
-    strncpy(outBuffer[0]+36, _firstName.c_str(), FIRSTNAMELENGTH);
-    strncpy(outBuffer[0]+49, _MI.c_str(), MILENGTH);
+    strncpy(outBuffer[0]+24, _lastName.c_str(), LASTNAMELENGTH);
+    strncpy(outBuffer[0]+42, _firstName.c_str(), FIRSTNAMELENGTH);
+    strncpy(outBuffer[0]+55, _MI.c_str(), MILENGTH);
 
     strncpy(outBuffer[1]+5, _OLN.c_str(), OLNLENGTH);
-    strncpy(outBuffer[1]+18, _street.c_str(), STREETLENGTH);
-    strncpy(outBuffer[1]+54, _stateCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[1]+58, StateName.c_str()+ 2, STATELENGTH);
+    strncpy(outBuffer[1]+24, _street.c_str(), STREETLENGTH);
+    strncpy(outBuffer[1]+65, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[1]+69, StateName.c_str(), 2);
 
-    strncpy(outBuffer[2]+18, _city.c_str(), CITYLENGTH);
-    strncpy(outBuffer[2]+38, _zip.c_str(), ZIPLENGTH);
-    strncpy(outBuffer[2]+54, _countyCode.c_str(), COUNTYCODELENGTH);
-    strncpy(outBuffer[2]+58, CountyName.c_str(), COUNTYLENGTH);
+    strncpy(outBuffer[2]+24, _city.c_str(), CITYLENGTH);
+    strncpy(outBuffer[2]+44, ZipHyphens(_zip).c_str(), ZIPLENGTH + 1);
+    strncpy(outBuffer[2]+65, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[2]+69, CountyName.c_str(), COUNTYLENGTH);
 
     for(i = 0; i < 3; i++)
     {
