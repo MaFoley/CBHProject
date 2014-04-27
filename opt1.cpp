@@ -1,4 +1,5 @@
 #include <string>
+#include <cstring>
 #include <iostream>
 #include <cstdlib>
 #include "State.h"
@@ -77,24 +78,30 @@ void option1()
 }
 
 void PrintOpt1Menu()
-{
-     system("clear");
+{   
+    int centerOffset;
+    char buffer[80];
+    string heading;
+
+    heading = "Police Information Systems Display Auxiliary Files Sub-Menu";
+    memset(buffer, '*', sizeof(buffer));
+
+    centerOffset = (sizeof(buffer) - heading.length())/2;
+    strncpy(buffer + centerOffset, heading.c_str(), heading.length());
+
     //Print header
-    cout.fill('*');
-    cout.width(10);
-    cout << '*';
-    cout << "Police Information System Display Auxiliary Files Sub Menu";
-    cout.fill('*');
-    cout.width(12);
-    cout << '*';
-    cout << "\n\n";
+    system("clear");
+    cout.write(buffer, sizeof(buffer));
+    cout << endl;
+    cout << "\n";
+
     //Print Selection choices
     cout << "\t\t\t(1) - Display Color Codes\n";
     cout << "\t\t\t(2) - Display County Codes\n";
     cout << "\t\t\t(3) - Display State Codes\n";
     cout << "\t\t\t(4) - Display Vehicle Make Codes\n";
     cout << "\t\t\t(5) - Display Vehicle Type Codes\n";
-    cout << "\t\t\t(Q) - Exit to Main Menu\n";
+    cout << "\t\t\t(Q) - Exit to Main Menu\n\n";
 
     cout.fill('*');
     cout.width(80);
@@ -104,15 +111,20 @@ void PrintOpt1Menu()
 
 void PrintAuxiliarySubHdg(string AuxName)
 {
-    system("clear");
+    int centerOffset;
+    char buffer[80];
+    string heading;
+
+    heading = "Police Information Systems Display Auxiliary Files Sub-Menu";
+    memset(buffer, '*', sizeof(buffer));
+
+    centerOffset = (sizeof(buffer) - heading.length())/2;
+    strncpy(buffer + centerOffset, heading.c_str(), heading.length());
+
     //Print header
-    cout.fill('*');
-    cout.width(10);
-    cout << '*';
-    cout << "Police Information System Display Auxiliary Files Sub Menu";
-    cout.fill('*');
-    cout.width(12);
-    cout << '*';
-    cout << "\n\n";
+    system("clear");
+    cout.write(buffer, sizeof(buffer));
+    cout << endl;
+    cout << "\n";
     cout << "\t\t\t Displaying Codes For: " << AuxName;
  }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <cstring>
 #include <string>
 using namespace std;
 
@@ -69,17 +70,22 @@ int main ()
 }
 
 void PrintMenu()
-{
-    system("clear");
+{   
+    int centerOffset;
+    char buffer[80];
+    string heading;
+
+    heading = "Police Information System Main Menu";
+    memset(buffer, '*', sizeof(buffer));
+
+    centerOffset = (sizeof(buffer) - heading.length())/2;
+    strncpy(buffer + centerOffset, heading.c_str(), heading.length());
+
     //Print header
-    cout.fill('*');
-    cout.width(16);
-    cout << '*';
-    cout << "Police Information System Main Menu";
-    cout.fill('*');
-    cout.width(29);
-    cout << '*';
-    cout << "\n\n";
+    system("clear");
+    cout.write(buffer, sizeof(buffer));
+    cout << endl;
+    cout << "\n";
     //Print Selection choices
     cout << "\t\t\t(1) - Display Adjunct Files\n";
     cout << "\t\t\t(2) - Display Record (Search by SSN)\n";
@@ -95,3 +101,4 @@ void PrintMenu()
     cout << '*';
     cout <<"\n\n\t\t\tEnter a Selection: ";
 }
+
