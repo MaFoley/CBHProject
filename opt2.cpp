@@ -22,6 +22,7 @@ void option2()
         if(inSSN[0] == 'q' || inSSN[0] == 'Q') break;
         //the Search method sanitizes the hyphens
         *pPerson = pPersonFile->SearchBySSN(inSSN);
+        cout << "\n";
         pPerson->DisplayPerson();
         UserWait();
     }
