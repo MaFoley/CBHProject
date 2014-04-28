@@ -15,6 +15,7 @@ public:
     void SortBySSN();
     Person SearchBySSN(const string & inSSN);
     Person SearchByOLN(const string & inOLN);
+    Person SearchByRecordNumber(const int & inRecordNumber);
 private:
     int _numberPersons;
     int _recordSize;

@@ -145,3 +145,26 @@ Person PersonFile::SearchByOLN(const string & aOLN)
         }
     }
 }
+
+Person PersonFile::SearchByRecordNumber(const int & inRecordNumber)
+{
+    char dataRecord[RECORDSIZE];
+    int icompare;
+    Person foundPerson;
+    if(inRecordNumber < 1 || inRecordNumber > _numberPersons)
+    {
+        foundPerson.SetFound(false);
+        return foundPerson;
+    }
+
+    _personFile.seekg(inRecordNumber*RECORDSIZE);
+    _personFile.read(dataRecord, RECORDSIZE);
+
+    _currentRecordNumber = inRecordNumber;
+    foundPerson.MakePerson(dataRecord);
+    if(foundPerson.IsDeleted())
+        foundPerson.SetFound(false);
+    return foundPerson;
+}
+    
+        
