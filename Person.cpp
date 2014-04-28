@@ -116,13 +116,14 @@ void Person::DisplayPerson()
     string StateName;
     string CountyName;
 
+    //This buffer is the set-up for the display. The strncpy's below populate this buffer
     char outBuffer[][82] = {
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "Displaying Record for: LASTNAME********* FIRSTNAME*** M   SSN: $$$-$$-$$$$       ",//00
-        "                                                          OLN: *********         ",//01
+        "Record for: LASTNAME********* FIRSTNAME*** M                                     ",//00
+        "       SSN: $$$-$$-$$$$                          OLN: *********                  ",//01
         "                                                                                 ",//02
-        "              ADDRESS: STREET************************   STATE: (XX) ST           ",//03
-        "                       CITY*************** ZIP*******  COUNTY: (XX) COUNTY****** " //04
+        "   ADDRESS: STREET************************     STATE: (XX) STATE*****************",//03
+        "            CITY*************** ST  ZIP*******  CNTY: (XX) COUNTY******          " //04
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
 
     intStateCode = atoi(_stateCode.c_str()); 
@@ -130,24 +131,27 @@ void Person::DisplayPerson()
     StateName = newState.GetState(intStateCode);
     CountyName = newCounty.GetCounty(intCountyCode);
 
-    strncpy(outBuffer[0]+23, _lastName.c_str(), LASTNAMELENGTH);
-    strncpy(outBuffer[0]+41, _firstName.c_str(), FIRSTNAMELENGTH);
-    strncpy(outBuffer[0]+54, _MI.c_str(), MILENGTH);
-    strncpy(outBuffer[0]+63, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
+    strncpy(outBuffer[0]+12, _lastName.c_str(), LASTNAMELENGTH);
+    strncpy(outBuffer[0]+30, _firstName.c_str(), FIRSTNAMELENGTH);
+    strncpy(outBuffer[0]+43, _MI.c_str(), MILENGTH);
 
-    strncpy(outBuffer[1]+63, _OLN.c_str(), OLNLENGTH);
+    strncpy(outBuffer[1]+12, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
+    strncpy(outBuffer[1]+54, _OLN.c_str(), OLNLENGTH);
 
-    strncpy(outBuffer[3]+23, _street.c_str(), STREETLENGTH);
-    strncpy(outBuffer[3]+64, _stateCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[3]+68, StateName.c_str(), 2);
+    strncpy(outBuffer[3]+12, _street.c_str(), STREETLENGTH);
+    strncpy(outBuffer[3]+55, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[3]+59, StateName.c_str()+2, STATELENGTH);
 
-    strncpy(outBuffer[4]+23, _city.c_str(), CITYLENGTH);
-    strncpy(outBuffer[4]+43, ZipHyphens(_zip).c_str(), ZIPLENGTH + 1);
-    strncpy(outBuffer[4]+64, _countyCode.c_str(), COUNTYCODELENGTH);
-    strncpy(outBuffer[4]+68, CountyName.c_str(), COUNTYLENGTH);
+    strncpy(outBuffer[4]+12, _city.c_str(), CITYLENGTH);
+    strncpy(outBuffer[4]+32, StateName.c_str(), 2);
+    strncpy(outBuffer[4]+36, ZipHyphens(_zip).c_str(), ZIPLENGTH + 1);
+    strncpy(outBuffer[4]+55, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[4]+59, CountyName.c_str(), COUNTYLENGTH);
 
+    //Writing out the buffer
     for(i = 0; i < 5; i++)
     {
+        cout << "\n\t";
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
         cout << endl;
     }
