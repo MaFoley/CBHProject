@@ -1,9 +1,9 @@
 #include <fstream>
 #include <string>
 #include <cstdio>
-#include "Person.h"
 
 using namespace std;
+class Person;
 
 class PersonFile
 {
@@ -16,6 +16,7 @@ public:
     Person SearchBySSN(const string & inSSN);
     Person SearchByOLN(const string & inOLN);
     Person SearchByRecordNumber(const int & inRecordNumber);
+    void UpdatePerson(Person & aPerson);
 private:
     int _numberPersons;
     int _recordSize;

@@ -3,6 +3,7 @@
 #include <string>
 #include <cstring>
 #include <cstdio>
+#include "Person.h"
 #include "PersonFile.h"
 
 using namespace std;
@@ -43,6 +44,13 @@ PersonFile::PersonFile():
     }
 }
 
+void PersonFile::UpdatePerson(Person & aPerson)
+{
+    string record;
+    record = aPerson.Recordify();
+    _personFile.seekp(_currentRecordNumber*RECORDSIZE);
+    _personFile.write(record.c_str(), RECORDSIZE);
+}
 void PersonFile::SortBySSN()
 {
     bool sorted;
