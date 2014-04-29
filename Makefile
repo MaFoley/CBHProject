@@ -25,7 +25,7 @@ opt2.o: opt2.cpp PersonFile.cpp Person.cpp UserWait.cpp SSNHyphens.cpp
 opt3.o: opt3.cpp
 	$(CC) $(CFLAGS) -c opt3.cpp
 
-opt4.o: opt4.cpp
+opt4.o: opt4.cpp SSNHyphens.cpp Trim.cpp UserWait.cpp
 	$(CC) $(CFLAGS) -c opt4.cpp
 
 opt5.o: opt5.cpp UserWait.cpp SSNHyphens.cpp
