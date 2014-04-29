@@ -99,7 +99,6 @@ string Person::Recordify()
 
     return data;
 }
-//void Person::Recordify()
 
 void Person::DisplayPerson()
 {
@@ -124,8 +123,8 @@ void Person::DisplayPerson()
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
         "SSN       : $$$-$$-$$$$                        OLN    :      *********             ",//00
         "FULL NAME : LASTNAME          FIRSTNAME    M                                       ",//01
-        "ADDRESS   : STREET                             STATE  : (XX) STATE                 ",//02
-        "            CITY                ST  ZIP        COUNTY : (XX) COUNTY                " //03
+        "ADDRESS   : STREET                             STATE  : (00) STATE                 ",//02
+        "            CITY                ST  ZIP        COUNTY : (00) COUNTY                " //03
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
 
     intStateCode = atoi(_stateCode.c_str()); 
@@ -180,6 +179,82 @@ void Person::DisplayPerson()
 }
 
 
+void Person::PrintPerson()
+{
+    if(_found == false || _deleted == true)
+        return;
+    int i;
+    State newState;
+    County newCounty;
+    int intStateCode;
+    int intCountyCode;
+    string StateName;
+    string CountyName;
+    string data;
+    string fullName;
+    string CityStZip;
+
+    //This buffer is the set-up for the display. The strncpy's below populate this buffer
+    char outBuffer[][84] = {
+       //SSN        FULL NAME?                         OLN           STATE  COUNTY
+       //           ADDRESS                        CITY                ZIPCODE
+       //012345678901234567890123456789012345678901234567890123456789012345678901234567890
+        "$$$-$$-$$$ FULLNAME##**********##########**** OLN########## (00)ST (00)COUNTY####**",//00
+        "           STREET####**********########## CITY######********* ZIP#######           ",//01
+    }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
+       //0         1         2         3         4         5         6         7         8
+
+    intStateCode = atoi(_stateCode.c_str()); 
+    intCountyCode = atoi(_countyCode.c_str()); 
+    StateName = newState.GetState(intStateCode);
+    CountyName = newCounty.GetCounty(intCountyCode);
+
+    //Making Full Name from last, first MI.
+    fullName.clear();
+    fullName.append(Trim(_lastName));
+    fullName.append(", ");
+    fullName.append(Trim(_firstName));
+    fullName.append(" ");
+    if(_MI != " ")
+    {
+        fullName.append(Trim(_MI));
+        fullName.append(".");
+    }
+    data.assign(34, ' ');
+    data.replace(0, fullName.length(), fullName);
+    strncpy(outBuffer[0]+11, data.c_str(), 34);
+
+    //Making the second part of address look good
+    CityStZip.clear();
+    CityStZip.append(Trim(_city));
+    CityStZip.append(", ");
+    CityStZip.append(Trim(StateName.substr(0,2)));
+    CityStZip.append(" ");
+    CityStZip.append(Trim(ZipHyphens(_zip)));
+    data.assign(34, ' ');
+    data.replace(0, CityStZip.length(), CityStZip);
+    strncpy(outBuffer[1]+42, data.c_str(), 34);
+
+    //Regular stuff
+    strncpy(outBuffer[0]+0, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
+    strncpy(outBuffer[0]+46, _OLN.c_str(), OLNLENGTH);
+    strncpy(outBuffer[0]+61, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[0]+64, StateName.c_str()+2, newState.GetRecordLength());
+
+    strncpy(outBuffer[1]+11, _street.c_str(), _street.length());
+    strncpy(outBuffer[1]+68, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[1]+71, CountyName.c_str(), newCounty.GetRecordLength());
+
+    //Writing out the buffer
+    for(i = 0; i < 2; i++)
+    {
+        cout << "\t";
+        cout.write(outBuffer[i], sizeof(outBuffer[i]));
+        cout << endl;
+    }
+}
+
+
 void Person::SetOLN(const string & inOLN)
 {
     int len = inOLN.length() < OLNLENGTH ?
@@ -189,12 +264,25 @@ void Person::SetOLN(const string & inOLN)
 
 void Person::SetStateCode(const string & inStateCode)
 {
-    _stateCode.assign(inStateCode, 0, STATECODELENGTH);
+    cout << "inStateCode.length() " << inStateCode.length() << endl;
+    if(inStateCode.length() == 1)
+    {
+        _stateCode = "0" + inStateCode;
+
+    }
+    else
+        _stateCode.replace(0,2,inStateCode);
 }
+
 
 void Person::SetCountyCode(const string & inCountyCode)
 {
-    _countyCode.assign(inCountyCode, 0, COUNTYCODELENGTH);
+    if(inCountyCode.length() == 1)
+    {
+        _countyCode= "0" + inCountyCode;
+    }
+    else
+        _countyCode.replace(0,2,inCountyCode);
 }
 
 void Person::SetLastName(const string & inLastName)

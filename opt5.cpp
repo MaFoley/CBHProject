@@ -36,6 +36,8 @@ void option5()
         getline(cin, choiceDelete);
         if(choiceDelete[0] == 'Y' || choiceDelete[0] == 'y')
         {
+            cout << "\n\t\tRecord for SSN: " << pPerson->GetSSNWithHyphens() << 
+                " Deleted!" << endl;
             pPerson->SetDeleted(true);
             pPersonFile->UpdatePerson(*pPerson);//ie write them back to the file, as deleted
         }

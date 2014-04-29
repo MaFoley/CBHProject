@@ -45,6 +45,13 @@ void option6()
                 UserWait();
                 break;
             }
+            if(choice[0] == 's' || choice[0] == 'S')
+            {
+                pPersonFile->UpdatePerson(*pPerson);
+                cout << "Changes to Record Committed to File." << endl;
+                UserWait();
+                break;
+            }
             intChoice = atoi(choice.c_str());
             switch(intChoice)
             {
@@ -90,6 +97,19 @@ void option6()
                     cout << "\n\n\t\tEnter State Code: ";
                     getline(cin, inData);
                     pPerson->SetStateCode(Trim(inData));
+                    break;   
+                case 9:
+                    system("clear");
+                    cout << "\n\t\tNow Displaying Codes for: County";
+                    pCounty->DisplayCounties();
+                    cout << "\n\n\t\tEnter State Code: ";
+                    getline(cin, inData);
+                    pPerson->SetCountyCode(Trim(inData));
+                    break;
+                case 10:
+                    cout << "\n\n\t\tEnter new Zip Code: ";
+                    getline(cin, inData);
+                    pPerson->SetZip(Trim(inData));
                     break;
                 default:
                     cout << "Invalid Selection: " << intChoice << " not recognized." << endl;
@@ -105,14 +125,17 @@ void option6()
 }
 void PrintMenuUpdate()
 {
-    cout << "\n\t\t************************************";
+    cout << "\n\t\t*************************************";
     cout << "\n\t\t(01) SSN             (07) OLN       ";
     cout << "\n\t\t(02) Last Name       (08) State     ";
     cout << "\n\t\t(03) First Name      (09) County    ";
     cout << "\n\t\t(04) Middle Initial  (10) Zip Code  ";
-    cout << "\n\t\t(05) Street Address  (11)           ";
-    cout << "\n\t\t(06) City            (12)           ";
-    cout << "\n\t\t************************************";
+    cout << "\n\t\t(05) Street Address                 ";
+    cout << "\n\t\t(06) City                           ";
+    cout << "\n\t\t=====================================";
+    cout << "\n\t\t(11) TAG             (14) V Make    ";
+    cout << "\n\t\t(C) Cancel Changes   (S) Save to File";
+    cout << "\n\t\t*************************************";
     cout << "\n\n\t\tEnter Number of Field to Update: " << flush;
 
     //SSN. OLN, State, County, LName, FName, MI, Street, City, Zip

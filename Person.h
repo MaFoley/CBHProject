@@ -12,7 +12,8 @@ class Person
         void MakePerson(const string & inRecord);
         string Recordify();
         void DisplayPerson();
-//
+        void PrintPerson();
+
         //All the gets
         const string & GetSSN() const { return _SSN;}
         string GetSSNWithHyphens() const { return SSNHyphens(_SSN); }
