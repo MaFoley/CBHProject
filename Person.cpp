@@ -164,7 +164,7 @@ void Person::DisplayPerson()
 
     strncpy(outBuffer[2]+12, _street.c_str(), _street.length());
     strncpy(outBuffer[2]+57, _stateCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[2]+61, StateName.c_str()+2, newState.GetRecordLength());
+    strncpy(outBuffer[2]+61, StateName.c_str()+2, newState.GetRecordLength()-2);
 
     strncpy(outBuffer[3]+57, _countyCode.c_str(), COUNTYCODELENGTH);
     strncpy(outBuffer[3]+61, CountyName.c_str(), newCounty.GetRecordLength());
@@ -192,15 +192,15 @@ void Person::PrintPerson()
     string CountyName;
     string data;
     string fullName;
-    string CityStZip;
+    string CitySt;
 
     //This buffer is the set-up for the display. The strncpy's below populate this buffer
-    char outBuffer[][84] = {
-       //SSN        FULL NAME?                         OLN           STATE  COUNTY
-       //           ADDRESS                        CITY                ZIPCODE
+    char outBuffer[][85] = {
+       //SSN         FULL NAME?                         OLN           STATE  COUNTY
+       //            ADDRESS                        CITY                     ZIPCODE
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "$$$-$$-$$$ FULLNAME##**********##########**** OLN########## (00)ST (00)COUNTY####**",//00
-        "           STREET####**********########## CITY######********* ZIP#######           ",//01
+        "$$$-$$-$$$$ FULLNAME##**********##########**** OLN######     (00)ST (00)COUNTY####**",//00
+        "            STREET####**********########## CITYST####************   ZIPCODE###      ",//01
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
        //0         1         2         3         4         5         6         7         8
 
@@ -222,33 +222,31 @@ void Person::PrintPerson()
     }
     data.assign(34, ' ');
     data.replace(0, fullName.length(), fullName);
-    strncpy(outBuffer[0]+11, data.c_str(), 34);
+    strncpy(outBuffer[0]+12, data.c_str(), 34);
 
     //Making the second part of address look good
-    CityStZip.clear();
-    CityStZip.append(Trim(_city));
-    CityStZip.append(", ");
-    CityStZip.append(Trim(StateName.substr(0,2)));
-    CityStZip.append(" ");
-    CityStZip.append(Trim(ZipHyphens(_zip)));
-    data.assign(34, ' ');
-    data.replace(0, CityStZip.length(), CityStZip);
-    strncpy(outBuffer[1]+42, data.c_str(), 34);
+    CitySt.clear();
+    CitySt.append(Trim(_city));
+    CitySt.append(", ");
+    CitySt.append(Trim(StateName.substr(0,2)));
+    data.assign(24, ' ');
+    data.replace(0, CitySt.length(), CitySt);
+    strncpy(outBuffer[1]+43, data.c_str(), 24);
 
     //Regular stuff
     strncpy(outBuffer[0]+0, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
-    strncpy(outBuffer[0]+46, _OLN.c_str(), OLNLENGTH);
-    strncpy(outBuffer[0]+61, _stateCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[0]+64, StateName.c_str()+2, newState.GetRecordLength());
+    strncpy(outBuffer[0]+47, _OLN.c_str(), OLNLENGTH);
+    strncpy(outBuffer[0]+62, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[0]+65, StateName.c_str(), 2);
+    strncpy(outBuffer[0]+69, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[0]+72, CountyName.c_str(), newCounty.GetRecordLength());
 
-    strncpy(outBuffer[1]+11, _street.c_str(), _street.length());
-    strncpy(outBuffer[1]+68, _countyCode.c_str(), COUNTYCODELENGTH);
-    strncpy(outBuffer[1]+71, CountyName.c_str(), newCounty.GetRecordLength());
+    strncpy(outBuffer[1]+12, _street.c_str(), _street.length());
+    strncpy(outBuffer[1]+68, ZipHyphens(_zip).c_str(), 10);
 
     //Writing out the buffer
     for(i = 0; i < 2; i++)
     {
-        cout << "\t";
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
         cout << endl;
     }

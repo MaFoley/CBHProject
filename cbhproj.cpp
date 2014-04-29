@@ -49,7 +49,6 @@ int main ()
                 break;
             case '7':
                 option7();
-                UserWait();
                 break;
             case 'q':
             case 'Q':

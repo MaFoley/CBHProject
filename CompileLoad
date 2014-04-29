@@ -12,4 +12,4 @@ echo 'CreateVehicle:'
 g++ -o CreateVehicle CreateVehicle.cpp
 echo 'CreatePerson:'
 g++ -o CreatePerson CreatePerson.cpp PersonFile.cpp Person.cpp SSNNoHyphens.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp \
-    State.cpp County.cpp Trim.cpp
+    State.cpp County.cpp Trim.cpp Upper.cpp

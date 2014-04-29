@@ -34,7 +34,7 @@ opt5.o: opt5.cpp
 opt6.o: opt6.cpp Trim.cpp
 	$(CC) $(CFLAGS) -c opt6.cpp
 
-opt7.o: opt7.cpp
+opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp
 	$(CC) $(CFLAGS) -c opt7.cpp
 
 Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp State.cpp County.cpp Trim.cpp
