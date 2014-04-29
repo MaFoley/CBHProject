@@ -17,6 +17,7 @@ void option6()
 {
     string inSSN;
     string choice;
+    string test;
     int intChoice;
     string inData;
     PersonFile * pPersonFile = new PersonFile;
@@ -34,8 +35,15 @@ void option6()
         *pPerson = pPersonFile->SearchBySSN(inSSN);
         while(true)
         {
+            if(pPerson->IsFound() == false || pPerson->IsDeleted())
+            {
+                cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " not found." << endl;
+                break;
+            }
+
             system("clear");
             cout << "\n\t\tDisplaying Record to Be Updated\n";
+
             pPerson->DisplayPerson();
             PrintMenuUpdate();
             getline(cin, choice);
@@ -48,6 +56,7 @@ void option6()
             if(choice[0] == 's' || choice[0] == 'S')
             {
                 pPersonFile->UpdatePerson(*pPerson);
+                pPersonFile->SortBySSN();
                 cout << "Changes to Record Committed to File." << endl;
                 UserWait();
                 break;

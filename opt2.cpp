@@ -8,10 +8,12 @@
 using namespace std;
 void PrintHeading2();
 string UserWait();
+string SSNHyphens(const string & aString);
 
 void option2()
 {
     string inSSN;
+    string test;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
 
@@ -25,7 +27,10 @@ void option2()
         *pPerson = pPersonFile->SearchBySSN(inSSN);
         cout << "\n";
         pPerson->DisplayPerson();
-        UserWait();
+        if(pPerson->IsFound() == false || pPerson->IsDeleted())
+            cout << "\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " not found." << endl;
+        test = UserWait();
+        if(test[0] == 'q' || test[0] == 'Q') break;
     }
 
     delete pPerson;

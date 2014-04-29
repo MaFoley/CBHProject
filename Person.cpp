@@ -104,7 +104,6 @@ void Person::DisplayPerson()
 {
     if(_found == false || _deleted == true)
     {
-        cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(_SSN) << " not found..." << endl;
         return;
     }
     int i;
@@ -164,9 +163,11 @@ void Person::DisplayPerson()
 
     strncpy(outBuffer[2]+12, _street.c_str(), _street.length());
     strncpy(outBuffer[2]+57, _stateCode.c_str(), STATECODELENGTH);
+    Upper(StateName);
     strncpy(outBuffer[2]+61, StateName.c_str()+2, newState.GetRecordLength()-2);
 
     strncpy(outBuffer[3]+57, _countyCode.c_str(), COUNTYCODELENGTH);
+    Upper(CountyName);
     strncpy(outBuffer[3]+61, CountyName.c_str(), newCounty.GetRecordLength());
 
     //Writing out the buffer

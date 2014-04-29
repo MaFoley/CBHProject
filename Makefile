@@ -19,7 +19,7 @@ UserWait.o: UserWait.cpp
 opt1.o: opt1.cpp UserWait.cpp Color.cpp County.cpp State.cpp VMake.cpp VType.cpp
 	$(CC) $(CFLAGS) -c opt1.cpp
 
-opt2.o: opt2.cpp PersonFile.cpp Person.cpp UserWait.cpp
+opt2.o: opt2.cpp PersonFile.cpp Person.cpp UserWait.cpp SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c opt2.cpp
 
 opt3.o: opt3.cpp
@@ -28,10 +28,10 @@ opt3.o: opt3.cpp
 opt4.o: opt4.cpp
 	$(CC) $(CFLAGS) -c opt4.cpp
 
-opt5.o: opt5.cpp
+opt5.o: opt5.cpp UserWait.cpp SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c opt5.cpp
 
-opt6.o: opt6.cpp Trim.cpp
+opt6.o: opt6.cpp Trim.cpp UserWait.cpp SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c opt6.cpp
 
 opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp

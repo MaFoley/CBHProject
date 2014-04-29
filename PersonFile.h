@@ -17,6 +17,7 @@ public:
     Person SearchByOLN(const string & inOLN);
     Person SearchByRecordNumber(const int & inRecordNumber);
     void UpdatePerson(Person & aPerson);
+    void AddPerson(Person & aPerson);
 private:
     int _numberPersons;
     int _recordSize;

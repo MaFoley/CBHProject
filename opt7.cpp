@@ -28,7 +28,8 @@ void option7()
             PrintHeading7();
         }
     }
-    if(i >= pPersonFile->GetNumberPersons()) UserWait();
+    if(i >= pPersonFile->GetNumberPersons()) 
+        UserWait();
     
     delete pPersonFile;
 }
@@ -38,7 +39,6 @@ void PrintHeading7()
 {   
     int centerOffset;
     char buffer[80];
-    char buffer1[80];
     string heading;
     string Row1Heading;
     string Row2Heading;

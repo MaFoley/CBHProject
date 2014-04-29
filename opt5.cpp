@@ -8,10 +8,12 @@
 using namespace std;
 void PrintHeading5();
 string UserWait();
+string SSNHyphens(const string & aSSN);
 
 void option5()
 {
     string inSSN;
+    string test;
     string choiceDelete;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
@@ -28,7 +30,11 @@ void option5()
 
         if(pPerson->IsDeleted() || pPerson->IsFound() == false)
         {
-            UserWait();
+            cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " not found." << endl;
+            test = UserWait();
+            if(test[0] == 'q' || test[0] == 'Q') 
+                break;
+
             continue;
         }
 
@@ -44,7 +50,8 @@ void option5()
         else
             cout << "\n\t\tRecord for SSN: " << pPerson->GetSSNWithHyphens() << 
                 " not deleted." << endl;
-        UserWait();
+        test = UserWait();
+        if(test[0] == 'q' || test[0] == 'Q') break;
     }
 
     delete pPerson;

@@ -43,6 +43,15 @@ PersonFile::PersonFile():
         _personFile.read((char *) &_numberPersons, sizeof(_numberPersons));
     }
 }
+void PersonFile::AddPerson(Person & aPerson)
+{
+    ++_numberPersons;
+    _currentRecordNumber = _numberPersons;
+    _personFile.seekp(0);
+    _personFile.write((char *) &_numberPersons, sizeof(_numberPersons));
+    UpdatePerson(aPerson);
+    SortBySSN();
+}
 
 void PersonFile::UpdatePerson(Person & aPerson)
 {
