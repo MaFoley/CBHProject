@@ -25,6 +25,7 @@ class Person
         const string & GetStreet() const { return _street;}
         const string & GetCity() const { return _city;}
         const string & GetZip() const { return _zip;}
+        const bool & IsFound() const { return _found; }
         const bool & IsDeleted() const { return _deleted; }
 
         //Note that _SSN is ALWAYS stored without hyphens
@@ -41,6 +42,7 @@ class Person
         void SetCity(const string & incity);
         void SetZip(const string & inzip);
         void SetFound(const bool & inFound) { _found = inFound; }
+        void SetDeleted(const bool & inDeleted) { _deleted = inDeleted; }
 
     private:
         string _SSN;

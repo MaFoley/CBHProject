@@ -2,10 +2,11 @@
 #include <string>
 #include <cstring>
 #include <cstdlib>
+#include "Person.h"
 #include "PersonFile.h"
 
 using namespace std;
-void PrintHeading();
+void PrintHeading2();
 string UserWait();
 
 void option2()
@@ -17,7 +18,7 @@ void option2()
     while(true)
     {
 
-        PrintHeading();
+        PrintHeading2();
         getline(cin, inSSN);
         if(inSSN[0] == 'q' || inSSN[0] == 'Q') break;
         //the Search method sanitizes the hyphens
@@ -30,7 +31,7 @@ void option2()
     delete pPerson;
     delete pPersonFile;
 }
-void PrintHeading()
+void PrintHeading2()
 {
     system("clear");
     //Print header
@@ -42,5 +43,5 @@ void PrintHeading()
     strncpy(buffer + 16, heading.c_str(), heading.length());
     cout.write(buffer, sizeof(buffer));
     cout << endl;
-    cout << "\n\t\tEnter SSN of Record to Display (Q to quit): ";
+    cout << "\n\t\t\tEnter SSN of Record to Display (Q to quit): ";
 }

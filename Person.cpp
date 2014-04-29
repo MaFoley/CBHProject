@@ -10,6 +10,8 @@ using namespace std;
 
 string SSNHyphens(const string &);
 string ZipHyphens(const string &);
+string Trim(string aString);
+void Upper(string &);
 
 
 
@@ -103,11 +105,9 @@ void Person::DisplayPerson()
 {
     if(_found == false || _deleted == true)
     {
-        cout << "\n\t\t\tRecord not found!" << endl;
+        cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(_SSN) << " not found..." << endl;
         return;
     }
-    const int COUNTYLENGTH = 12;
-    const int STATELENGTH = 22;
     int i;
     State newState;
     County newCounty;
@@ -115,15 +115,17 @@ void Person::DisplayPerson()
     int intCountyCode;
     string StateName;
     string CountyName;
+    string data;
+    string fullName;
+    string CityStZip;
 
     //This buffer is the set-up for the display. The strncpy's below populate this buffer
-    char outBuffer[][82] = {
+    char outBuffer[][84] = {
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "Record for: LASTNAME********* FIRSTNAME*** M                                     ",//00
-        "       SSN: $$$-$$-$$$$                          OLN: *********                  ",//01
-        "                                                                                 ",//02
-        "   ADDRESS: STREET************************     STATE: (XX) STATE*****************",//03
-        "            CITY*************** ST  ZIP*******  CNTY: (XX) COUNTY******          " //04
+        "SSN       : $$$-$$-$$$$                        OLN    :      *********             ",//00
+        "FULL NAME : LASTNAME          FIRSTNAME    M                                       ",//01
+        "ADDRESS   : STREET                             STATE  : (XX) STATE                 ",//02
+        "            CITY                ST  ZIP        COUNTY : (XX) COUNTY                " //03
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
 
     intStateCode = atoi(_stateCode.c_str()); 
@@ -131,25 +133,45 @@ void Person::DisplayPerson()
     StateName = newState.GetState(intStateCode);
     CountyName = newCounty.GetCounty(intCountyCode);
 
-    strncpy(outBuffer[0]+12, _lastName.c_str(), LASTNAMELENGTH);
-    strncpy(outBuffer[0]+30, _firstName.c_str(), FIRSTNAMELENGTH);
-    strncpy(outBuffer[0]+43, _MI.c_str(), MILENGTH);
+    //Making Full Name from last, first MI.
+    fullName.clear();
+    fullName.append(Trim(_lastName));
+    fullName.append(", ");
+    fullName.append(Trim(_firstName));
+    fullName.append(" ");
+    if(_MI != " ")
+    {
+        fullName.append(Trim(_MI));
+        fullName.append(".");
+    }
+    data.assign(34, ' ');
+    data.replace(0, fullName.length(), fullName);
+    strncpy(outBuffer[1]+12, data.c_str(), 34);
 
-    strncpy(outBuffer[1]+12, SSNHyphens(_SSN).c_str(),SSNLENGTH + 2);
-    strncpy(outBuffer[1]+54, _OLN.c_str(), OLNLENGTH);
+    //Making the second part of address look good
+    CityStZip.clear();
+    CityStZip.append(Trim(_city));
+    CityStZip.append(", ");
+    CityStZip.append(Trim(StateName.substr(0,2)));
+    CityStZip.append(" ");
+    CityStZip.append(Trim(ZipHyphens(_zip)));
+    data.assign(34, ' ');
+    data.replace(0, CityStZip.length(), CityStZip);
+    strncpy(outBuffer[3]+12, data.c_str(), 34);
 
-    strncpy(outBuffer[3]+12, _street.c_str(), STREETLENGTH);
-    strncpy(outBuffer[3]+55, _stateCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[3]+59, StateName.c_str()+2, STATELENGTH);
+    //Regular stuff
+    strncpy(outBuffer[0]+12, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
+    strncpy(outBuffer[0]+61, _OLN.c_str(), OLNLENGTH);
 
-    strncpy(outBuffer[4]+12, _city.c_str(), CITYLENGTH);
-    strncpy(outBuffer[4]+32, StateName.c_str(), 2);
-    strncpy(outBuffer[4]+36, ZipHyphens(_zip).c_str(), ZIPLENGTH + 1);
-    strncpy(outBuffer[4]+55, _countyCode.c_str(), COUNTYCODELENGTH);
-    strncpy(outBuffer[4]+59, CountyName.c_str(), COUNTYLENGTH);
+    strncpy(outBuffer[2]+12, _street.c_str(), _street.length());
+    strncpy(outBuffer[2]+57, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[2]+61, StateName.c_str()+2, newState.GetRecordLength());
+
+    strncpy(outBuffer[3]+57, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[3]+61, CountyName.c_str(), newCounty.GetRecordLength());
 
     //Writing out the buffer
-    for(i = 0; i < 5; i++)
+    for(i = 0; i < 4; i++)
     {
         cout << "\n\t";
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
@@ -180,7 +202,7 @@ void Person::SetLastName(const string & inLastName)
     int len = inLastName.length() < LASTNAMELENGTH ?
         inLastName.length() : LASTNAMELENGTH;
     _lastName.assign(inLastName, 0, len);
-    //Upper(_lastName);
+    Upper(_lastName);
 }
 
 void Person::SetFirstName(const string & inFirstName)
@@ -188,7 +210,7 @@ void Person::SetFirstName(const string & inFirstName)
     int len = inFirstName.length() < FIRSTNAMELENGTH ?
         inFirstName.length() : FIRSTNAMELENGTH;
     _firstName.assign(inFirstName, 0, len);
-    //Upper(_firstName);
+    Upper(_firstName);
 }
 
 void Person::SetMI(const string & inMI)
@@ -196,9 +218,32 @@ void Person::SetMI(const string & inMI)
     int len = inMI.length() < MILENGTH ?
         inMI.length() : MILENGTH;
     _MI.assign(inMI, 0, len);
+    Upper(_MI);
 }
 
+void Person::SetStreet(const string & inStreet)
+{
+    int len = inStreet.length() < STREETLENGTH ?
+        inStreet.length() : STREETLENGTH;
+    _street.assign(inStreet, 0, len);
+    Upper(_street);
+}
 
+void Person::SetCity(const string & inCity)
+{
+    int len = inCity.length() < CITYLENGTH ?
+        inCity.length() : CITYLENGTH;
+    _city.assign(inCity, 0, len);
+    Upper(_city);
+}
+
+void Person::SetZip(const string & inZip)
+{
+    int len = inZip.length() < ZIPLENGTH ?
+        inZip.length() : ZIPLENGTH;
+    _zip.assign(inZip, 0, len);
+    Upper(_zip);
+}
 
 /*
 const int SSNLENGTH = 9;

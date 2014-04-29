@@ -5,7 +5,7 @@ CC=g++
 CFLAGS=
 OBJ=cbhproj.o UserWait.o opt1.o opt2.o opt3.o opt4.o opt5.o opt6.o opt7.o \
 	Color.o County.o State.o VMake.o VType.o Upper.o SSNHyphens.o SSNNoHyphens.o \
-	Person.o PersonFile.o ZipHyphens.o ZipNoHyphens.o
+	Person.o PersonFile.o ZipHyphens.o ZipNoHyphens.o Trim.o
 
 cbhproj: $(OBJ)
 	$(CC) -o cbhproj $(OBJ)
@@ -31,13 +31,13 @@ opt4.o: opt4.cpp
 opt5.o: opt5.cpp
 	$(CC) $(CFLAGS) -c opt5.cpp
 
-opt6.o: opt6.cpp
+opt6.o: opt6.cpp Trim.cpp
 	$(CC) $(CFLAGS) -c opt6.cpp
 
 opt7.o: opt7.cpp
 	$(CC) $(CFLAGS) -c opt7.cpp
 
-Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp State.cpp County.cpp
+Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp State.cpp County.cpp Trim.cpp
 	$(CC) $(CFLAGS) -c Person.cpp
 
 PersonFile.o: PersonFile.cpp Person.cpp SSNNoHyphens.cpp
@@ -54,6 +54,9 @@ SSNNoHyphens.o: SSNNoHyphens.cpp
 
 ZipNoHyphens.o: ZipNoHyphens.cpp
 	$(CC) $(CFLAGS) -c ZipNoHyphens.cpp
+
+Trim.o: Trim.cpp
+	$(CC) $(CFLAGS) -c Trim.cpp
 
 clean:
 	rm cbhproj *.o *.db core mafoley1.tar mafoley1.tar.gz

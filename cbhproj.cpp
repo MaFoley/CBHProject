@@ -43,11 +43,9 @@ int main ()
                 break;
             case '5':
                 option5();
-                UserWait();
                 break;
             case '6':
                 option6();
-                UserWait();
                 break;
             case '7':
                 option7();

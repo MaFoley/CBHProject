@@ -118,7 +118,7 @@ Person PersonFile::SearchBySSN(const string & aSSN)
         if(icompare > 0) first=midpoint+1;
         if(icompare == 0)
         {
-            _currentRecordNumber=midpoint+1;
+            _currentRecordNumber=midpoint;
             foundPerson.MakePerson(dataRecord);
             if(foundPerson.IsDeleted())
                 foundPerson.SetFound(false);
