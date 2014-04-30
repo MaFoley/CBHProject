@@ -30,46 +30,72 @@ void option4()
 
         PrintHeading4();
         getline(cin,inData);
+        cin.sync();
         if(inData[0] == 'q' || inData[0] == 'Q') break;
         *pPerson = pPersonFile->SearchBySSN(inData);
         if(pPerson->IsFound() == true)
         {
-            cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " already exist." << endl;
-            break;
+            cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " already exists." << endl;
+            test = UserWait();
+            if(test[0] == 'q' || test[0] =='Q')
+                break;         
+            
+            continue;
         }
+        //This Block only runs if the SSN was not found in the file
         pPerson->SetSSN(Trim(inData));
-        cout << "\n\n\t\tEnter new Last Name: ";
+        pPerson->DisplayPerson();
+
+        cout << "\n\n\t\tEnter new Last Name     : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetLastName(Trim(inData));
-        cout << "\n\n\t\tEnter new First Name: ";
+
+        cout << "\n\n\t\tEnter new First Name    : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetFirstName(Trim(inData));
+        
         cout << "\n\n\t\tEnter new Middle Initial: ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetMI(Trim(inData));
+
         cout << "\n\n\t\tEnter new Street Address: ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetStreet(Trim(inData));
-        cout << "\n\n\t\tEnter new City: ";
+
+        cout << "\n\n\t\tEnter new City          : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetCity(Trim(inData));
-        cout << "\n\n\t\tEnter new OLN: ";
+
+        cout << "\n\n\t\tEnter new OLN           : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetOLN(Trim(inData));
         system("clear");
+
         cout << "\n\t\tNow Displaying Codes for: State";
         pState->DisplayStates();
-        cout << "\n\n\t\tEnter State Code: ";
+        cout << "\n\n\t\tEnter State Code        : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetStateCode(Trim(inData));
         system("clear");
+
         cout << "\n\t\tNow Displaying Codes for: County";
         pCounty->DisplayCounties();
-        cout << "\n\n\t\tEnter State Code: ";
+        cout << "\n\n\t\tEnter County Code       : ";
         getline(cin, inData);
+        cin.sync();
         pPerson->SetCountyCode(Trim(inData));
-        cout << "\n\n\t\tEnter new Zip Code: ";
+
+        cout << "\n\n\t\tEnter new Zip Code      : ";
         getline(cin, inData);
+        cin.sync();
+        //Like SSN, the Set takes care of removing hyphens
         pPerson->SetZip(Trim(inData));
 
         pPerson->DisplayPerson();
@@ -77,10 +103,16 @@ void option4()
         getline(cin, choice);
         cin.sync();
         if(choice[0] != 'y' && choice[0] !='Y')
-            break;         
+        {
+            cout << "\n\t\tRecord not Committed to File. " << endl;
+            test = UserWait();
+            if(test[0] == 'q' || test[0] =='Q')
+                break;         
+            continue;         
+        }
 
         pPersonFile->AddPerson(*pPerson);
-        cout << "\t\tRecord Committed to File." << endl;
+        cout << "\n\t\tRecord Committed to File." << endl;
         UserWait();
        
     }

@@ -14,9 +14,12 @@ void option7();
 
 string UserWait();
 void PrintMenu();
+void DisplayRecord(const int LookupType);
 
 int main ()
 {
+    const int SSNLOOK = 2;
+    const int OLNLOOK = 3;
     bool continueLoop = true;
     string opt;
     while(continueLoop)
@@ -31,11 +34,10 @@ int main ()
                 option1();
                 break;
             case '2':
-                option2();
+                DisplayRecord(SSNLOOK);
                 break;
             case '3':
-                option3();
-                UserWait();
+                DisplayRecord(OLNLOOK);
                 break;
             case '4':
                 option4();

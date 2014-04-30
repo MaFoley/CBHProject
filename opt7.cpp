@@ -11,16 +11,21 @@ void option7()
 {
     PersonFile * pPersonFile = new PersonFile;
     Person aPerson;
+    const int RECPERPAGE = 5;
     int i;
+    int PersonsPrinted;
     string test;
 
     system("clear");
     PrintHeading7();
+    PersonsPrinted = 0;
     for(i = 1; i <= pPersonFile->GetNumberPersons();i++)
     {
         aPerson = pPersonFile->SearchByRecordNumber(i);
         aPerson.PrintPerson();
-        if(i % 5 == 0)
+        if(aPerson.IsFound() && !aPerson.IsDeleted())
+            PersonsPrinted++;
+        if(PersonsPrinted % RECPERPAGE == 0)
         {
             test = UserWait();
             if(test[0] == 'q' || test[0] =='Q') break;

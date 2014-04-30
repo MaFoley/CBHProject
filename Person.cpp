@@ -9,7 +9,9 @@
 using namespace std;
 
 string SSNHyphens(const string &);
+string SSNNoHyphens(const string &);
 string ZipHyphens(const string &);
+string ZipNoHyphens(const string &);
 string Trim(string aString);
 void Upper(string &);
 
@@ -326,10 +328,7 @@ void Person::SetCity(const string & inCity)
 
 void Person::SetZip(const string & inZip)
 {
-    int len = inZip.length() < ZIPLENGTH ?
-        inZip.length() : ZIPLENGTH;
-    _zip.assign(inZip, 0, len);
-    Upper(_zip);
+    _zip.assign(ZipNoHyphens(inZip), 0, ZIPLENGTH);
 }
 
 /*

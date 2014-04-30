@@ -140,17 +140,15 @@ Person PersonFile::SearchByOLN(const string & aOLN)
 {
     int icompare;
     char dataRecord[RECORDSIZE];
-    string olnSearch;
     Person foundPerson;
 
     foundPerson.SetFound(false);
 
     for(int searchRecord = 1; searchRecord <= _numberPersons; ++searchRecord)
     {
-        cout << "searchRecord: " << searchRecord << endl;
         _personFile.seekg(searchRecord*RECORDSIZE);
         _personFile.read(dataRecord,RECORDSIZE);
-        icompare =  strncmp(olnSearch.c_str(), dataRecord+9 ,olnSearch.length());
+        icompare =  strncmp(aOLN.c_str(), dataRecord+9 ,aOLN.length());
 
         if(icompare == 0)
         {

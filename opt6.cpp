@@ -30,6 +30,7 @@ void option6()
 
         PrintHeading6();
         getline(cin, inSSN);
+        cin.sync();
         if(inSSN[0] == 'q' || inSSN[0] == 'Q') break;
         //the Search method sanitizes the hyphens
         *pPerson = pPersonFile->SearchBySSN(inSSN);
@@ -47,6 +48,7 @@ void option6()
             pPerson->DisplayPerson();
             PrintMenuUpdate();
             getline(cin, choice);
+            cin.sync();
             if(choice[0] == 'c' || choice[0] == 'C')
             {
                 cout << "Changes to Record not Saved." << endl;
@@ -67,36 +69,43 @@ void option6()
                 case 1:
                     cout << "\n\n\t\tEnter new SSN: ";
                     getline(cin,inData);
+                    cin.sync();
                     pPerson->SetSSN(Trim(inData));
                    break;
                 case 2:
                     cout << "\n\n\t\tEnter new Last Name: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetLastName(Trim(inData));
                     break;
                 case 3:
                     cout << "\n\n\t\tEnter new First Name: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetFirstName(Trim(inData));
                     break;
                 case 4:
                     cout << "\n\n\t\tEnter new Middle Initial: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetMI(Trim(inData));
                     break;
                 case 5:
                     cout << "\n\n\t\tEnter new Street Address: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetStreet(Trim(inData));
                     break;
                 case 6:
                     cout << "\n\n\t\tEnter new City: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetCity(Trim(inData));
                     break;
                 case 7:
                     cout << "\n\n\t\tEnter new OLN: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetOLN(Trim(inData));
                     break;
                 case 8:
@@ -105,6 +114,7 @@ void option6()
                     pState->DisplayStates();
                     cout << "\n\n\t\tEnter State Code: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetStateCode(Trim(inData));
                     break;   
                 case 9:
@@ -118,6 +128,7 @@ void option6()
                 case 10:
                     cout << "\n\n\t\tEnter new Zip Code: ";
                     getline(cin, inData);
+                    cin.sync();
                     pPerson->SetZip(Trim(inData));
                     break;
                 default:
