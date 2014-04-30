@@ -9,7 +9,6 @@ const int DATALENGTH = 111;
 
 int main()
 {
-    PersonFile * pPersonFile = new PersonFile;
     const char INFILE[] = "person.data";
     const char OUTFILE[] = "person.db";
     int numberRecords;
@@ -63,9 +62,10 @@ int main()
 
     cout << "Number of valid records written to " << OUTFILE << ": " << numberRecords << endl;
     cout << "Sorting..." << endl;
+    PersonFile * pPersonFile = new PersonFile;
     pPersonFile -> SortBySSN();
+    delete pPersonFile;
     cout << "Sorted!" << endl;
 
-    delete pPersonFile;
     return 0;
 }
