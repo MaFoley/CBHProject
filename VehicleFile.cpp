@@ -43,7 +43,7 @@ VehicleFile::VehicleFile():
         _vehicleFile.read((char *) &_numberVehicles, sizeof(_numberVehicles));
     }
 }
-/*
+
 void VehicleFile::AddVehicle(Vehicle & aVehicle)
 {
     ++_numberVehicles;
@@ -53,7 +53,7 @@ void VehicleFile::AddVehicle(Vehicle & aVehicle)
     UpdateVehicle(aVehicle);
     SortBySSN();
 }
-*/
+
 void VehicleFile::UpdateVehicle(Vehicle & aVehicle)
 {
     string record;
@@ -113,6 +113,7 @@ Vehicle VehicleFile::SearchBySSN(const string & aSSN)
     Vehicle foundVehicle;
 
     foundVehicle.SetFound(false);
+    foundVehicle.SetSSN(aSSN);
     ssnSearch = SSNNoHyphens(aSSN);
     first=1;
     last=_numberVehicles;

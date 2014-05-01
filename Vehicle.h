@@ -11,10 +11,10 @@ class Vehicle
         ~Vehicle() {}
         void MakeVehicle(const string & inRecord);
         string Recordify();
-/*
+
         void DisplayVehicle();
         void PrintVehicle();
-*/
+
         //All the gets
         const string & GetSSN() const { return _SSN;}
         string GetSSNWithHyphens() const { return SSNHyphens(_SSN); }

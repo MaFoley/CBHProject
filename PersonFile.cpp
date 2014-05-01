@@ -111,6 +111,7 @@ Person PersonFile::SearchBySSN(const string & aSSN)
     Person foundPerson;
 
     foundPerson.SetFound(false);
+    foundPerson.SetSSN(aSSN);
     ssnSearch = SSNNoHyphens(aSSN);
     first=1;
     last=_numberPersons;
@@ -143,6 +144,7 @@ Person PersonFile::SearchByOLN(const string & aOLN)
     Person foundPerson;
 
     foundPerson.SetFound(false);
+    foundPerson.SetOLN(aOLN);
 
     for(int searchRecord = 1; searchRecord <= _numberPersons; ++searchRecord)
     {

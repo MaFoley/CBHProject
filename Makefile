@@ -23,16 +23,16 @@ DisplayRecord.o: DisplayRecord.cpp PersonFile.cpp Person.cpp Vehicle.cpp Vehicle
 	UserWait.cpp SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c DisplayRecord.cpp
 
-opt4.o: opt4.cpp SSNHyphens.cpp Trim.cpp UserWait.cpp
+opt4.o: opt4.cpp SSNHyphens.cpp Trim.cpp UserWait.cpp Person.cpp PersonFile.cpp Vehicle.cpp VehicleFile.cpp
 	$(CC) $(CFLAGS) -c opt4.cpp
 
-opt5.o: opt5.cpp UserWait.cpp SSNHyphens.cpp
+opt5.o: opt5.cpp UserWait.cpp SSNHyphens.cpp Person.cpp PersonFile.cpp Vehicle.cpp VehicleFile.cpp
 	$(CC) $(CFLAGS) -c opt5.cpp
 
-opt6.o: opt6.cpp Trim.cpp UserWait.cpp SSNHyphens.cpp
+opt6.o: opt6.cpp Trim.cpp UserWait.cpp SSNHyphens.cpp PersonFile.cpp Person.cpp Vehicle.cpp VehicleFile.cpp
 	$(CC) $(CFLAGS) -c opt6.cpp
 
-opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp
+opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp Vehicle.cpp VehicleFile.cpp
 	$(CC) $(CFLAGS) -c opt7.cpp
 
 Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp State.cpp County.cpp \

@@ -30,6 +30,7 @@ Vehicle::Vehicle() :  _length(RECORDSIZE), _found(false), _deleted(false)
 
 void Vehicle::MakeVehicle(const string & inRecord)
 {
+    //Reading from offsets in the record, which is retrieved from vehicle.db in via a VehicleFile object
     _found = true;
     _SSN = inRecord.substr(0, SSNLENGTH);
     _VTypeCode = inRecord.substr(9, VTYPECODELENGTH);
@@ -48,6 +49,8 @@ string Vehicle::Recordify()
 
     data.assign(_length, 0x20);
 
+    //The ternary ensures that what's put into the record is only as long as the space
+    //allotted for it in the file
     len = _SSN.length() < SSNLENGTH ?
         _SSN.length() : SSNLENGTH;
     data.replace(0, len, _SSN);
@@ -68,6 +71,9 @@ string Vehicle::Recordify()
         _bottomColorCode.length() : COLORCODELENGTH;
     data.replace(15, len, _bottomColorCode);
 
+    len = _tag.length() < TAGLENGTH ?
+        _tag.length() : TAGLENGTH;
+    data.replace(17, len, _tag);
 
     data[RECORDSIZE-1] = _deleted ? '1' : '0';
 
@@ -76,9 +82,10 @@ string Vehicle::Recordify()
 
 void Vehicle::DisplayVehicle()
 {
+    //Rather sloppily handling if there is not a vehicle for the foreign key given
     if(_found == false || _deleted == true)
     {
-        cout << "============================Vehicle Information====================================";
+        cout << "\t============================Vehicle Information====================================";
         cout << "\n\n\tFor SSN: " << SSNHyphens(_SSN) << " no vehicle found." << endl << endl;
         return;
     }
@@ -137,82 +144,75 @@ void Vehicle::DisplayVehicle()
         cout << endl;
     }
 }
-/*
 
+//Print is just a more condensed version of display.  Used in option 7
 void Vehicle::PrintVehicle()
 {
+    //Rather sloppily handling if there is not a vehicle for the foreign key given
     if(_found == false || _deleted == true)
+    {
+        cout << "\tNO VEHICLE FOUND FOR DRIVER" << endl << endl;
         return;
+    }
     int i;
-    State newState;
-    County newCounty;
-    int intStateCode;
-    int intCountyCode;
-    string StateName;
-    string CountyName;
+    VType newVType;
+    VMake newVMake;
+    Color newColorCode;
+    int intCode;
+    string VTypeName;
+    string VMakeName;
+    string TopColorName;
+    string BottomColorName;
     string data;
-    string fullName;
-    string CitySt;
 
     //This buffer is the set-up for the display. The strncpy's below populate this buffer
     char outBuffer[][85] = {
-       //SSN         FULL NAME?                         OLN           STATE  COUNTY
-       //            ADDRESS                        CITY                     ZIPCODE
+       //    TAG     VMAKE                      VTYPE                 TOP CLR   BTM CLR  
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
-        "$$$-$$-$$$$ FULLNAME##**********##########**** OLN######     (00)ST (00)COUNTY####**",//00
-        "            STREET####**********########## CITYST####************   ZIPCODE###      ",//01
+        "    TAG**** (00) VMAKE*****#           (00) VTYPE*****#####  (00) TOP  (00) BTM     ",//00
     }; //012345678901234567890123456789012345678901234567890123456789012345678901234567890
        //0         1         2         3         4         5         6         7         8
 
-    intStateCode = atoi(_VTypeCode.c_str()); 
-    intCountyCode = atoi(_countyCode.c_str()); 
-    StateName = newState.GetState(intStateCode);
-    CountyName = newCounty.GetCounty(intCountyCode);
+ 
+    //Creating integer codes so that the GetCode methods can be called correctly
+    intCode = atoi(_VTypeCode.c_str()); 
+    VTypeName = newVType.GetVType(intCode);
 
-    //Making Full Name from last, first MI.
-    fullName.clear();
-    fullName.append(Trim(_lastName));
-    fullName.append(", ");
-    fullName.append(Trim(_firstName));
-    fullName.append(" ");
-    if(_MI != " ")
-    {
-        fullName.append(Trim(_MI));
-        fullName.append(".");
-    }
-    data.assign(34, ' ');
-    data.replace(0, fullName.length(), fullName);
-    strncpy(outBuffer[0]+12, data.c_str(), 34);
+    intCode = atoi(_VTypeCode.c_str()); 
+    VMakeName = newVMake.GetVMake(intCode);
 
-    //Making the second part of address look good
-    CitySt.clear();
-    CitySt.append(Trim(_city));
-    CitySt.append(", ");
-    CitySt.append(Trim(StateName.substr(0,2)));
-    data.assign(24, ' ');
-    data.replace(0, CitySt.length(), CitySt);
-    strncpy(outBuffer[1]+43, data.c_str(), 24);
+    intCode = atoi(_topColorCode.c_str()); 
+    TopColorName = newColorCode.GetColor(intCode);
 
-    //Regular stuff
-    strncpy(outBuffer[0]+0, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
-    strncpy(outBuffer[0]+47, _OLN.c_str(), OLNLENGTH);
-    strncpy(outBuffer[0]+62, _VTypeCode.c_str(), STATECODELENGTH);
-    strncpy(outBuffer[0]+65, StateName.c_str(), 2);
-    strncpy(outBuffer[0]+69, _countyCode.c_str(), COUNTYCODELENGTH);
-    strncpy(outBuffer[0]+72, CountyName.c_str(), newCounty.GetRecordLength());
+    intCode = atoi(_bottomColorCode.c_str()); 
+    BottomColorName = newColorCode.GetColor(intCode);
 
-    strncpy(outBuffer[1]+12, _street.c_str(), _street.length());
-    strncpy(outBuffer[1]+68, ZipHyphens(_zip).c_str(), 10);
+    //Regular strncpy's straight from the members of the class
+    strncpy(outBuffer[0]+4, _tag.c_str(), TAGLENGTH);
+
+    strncpy(outBuffer[0]+13, _VMakeCode.c_str(), VMAKECODELENGTH);
+    strncpy(outBuffer[0]+17, VMakeName.c_str(), VMakeName.length());
+    strncpy(outBuffer[0]+40, _VTypeCode.c_str(), VTYPECODELENGTH);
+    strncpy(outBuffer[0]+44, VTypeName.c_str(), VTypeName.length());
+
+    strncpy(outBuffer[0]+62, _topColorCode.c_str(), COLORCODELENGTH);
+    strncpy(outBuffer[0]+66, TopColorName.c_str(), 3); //prints out abbreviation instead of full color name
+    strncpy(outBuffer[0]+72, _bottomColorCode.c_str(), COLORCODELENGTH);
+    strncpy(outBuffer[0]+76, BottomColorName.c_str(), 3); //prints out abbreviation instead of full color name
 
     //Writing out the buffer
-    for(i = 0; i < 2; i++)
+    //Loop structure is kept just in case more rows are desired later
+    for(i = 0; i < 1; i++)
     {
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
         cout << endl;
     }
+    cout << endl;
 }
-*/
 
+
+//This set make use of the ternary operator to ensure what's put into the member
+//is not too large for the space allotted in the .db file
 void Vehicle::SetTag(const string & inTag)
 {
     int len = inTag.length() < TAGLENGTH ?
@@ -221,9 +221,9 @@ void Vehicle::SetTag(const string & inTag)
     Upper(_tag);
 }
 
+//Setting the Codes requires accounting for single digit codes.  This is accomplished via the if-else construct
 void Vehicle::SetVTypeCode(const string & inVTypeCode)
 {
-    cout << "inVTypeCode.length() " << inVTypeCode.length() << endl;
     if(inVTypeCode.length() == 1)
     {
         _VTypeCode = "0" + inVTypeCode;
@@ -235,7 +235,6 @@ void Vehicle::SetVTypeCode(const string & inVTypeCode)
 
 void Vehicle::SetVMakeCode(const string & inVMakeCode)
 {
-    cout << "inVMakeCode.length() " << inVMakeCode.length() << endl;
     if(inVMakeCode.length() == 1)
     {
         _VMakeCode = "0" + inVMakeCode;
@@ -247,7 +246,6 @@ void Vehicle::SetVMakeCode(const string & inVMakeCode)
 
 void Vehicle::SetTopColorCode(const string & inTopColorCode)
 {
-    cout << "inTopColorCode.length() " << inTopColorCode.length() << endl;
     if(inTopColorCode.length() == 1)
     {
         _topColorCode = "0" + inTopColorCode;

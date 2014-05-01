@@ -17,7 +17,7 @@ public:
     Vehicle SearchByOLN(const string & inOLN);
     Vehicle SearchByRecordNumber(const int & inRecordNumber);
     void UpdateVehicle(Vehicle & aVehicle);
-//    void AddVehicle(Vehicle & aVehicle);
+    void AddVehicle(Vehicle & aVehicle);
 private:
     int _numberVehicles;
     int _recordSize;

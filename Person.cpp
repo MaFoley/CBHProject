@@ -180,6 +180,7 @@ void Person::DisplayPerson()
         cout.write(outBuffer[i], sizeof(outBuffer[i]));
         cout << endl;
     }
+    cout << endl;
 }
 
 
@@ -266,7 +267,6 @@ void Person::SetOLN(const string & inOLN)
 
 void Person::SetStateCode(const string & inStateCode)
 {
-    cout << "inStateCode.length() " << inStateCode.length() << endl;
     if(inStateCode.length() == 1)
     {
         _stateCode = "0" + inStateCode;

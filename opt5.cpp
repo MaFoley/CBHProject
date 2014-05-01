@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include "Person.h"
 #include "PersonFile.h"
+#include "Vehicle.h"
+#include "VehicleFile.h"
 
 using namespace std;
 void PrintHeading5();
@@ -17,6 +19,8 @@ void option5()
     string choiceDelete;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
+    VehicleFile * pVehicleFile = new VehicleFile;
+    Vehicle * pVehicle = new Vehicle;
 
     while(true)
     {
@@ -27,7 +31,12 @@ void option5()
         //the Search method sanitizes the hyphens
         *pPerson = pPersonFile->SearchBySSN(inSSN);
         pPerson->DisplayPerson();
-
+        if( pPerson->IsFound() || !pPerson->IsDeleted())
+        {
+            *pVehicle = pVehicleFile->SearchBySSN(pPerson->GetSSN());
+            pVehicle->DisplayVehicle();
+        }
+        
         if(pPerson->IsDeleted() || pPerson->IsFound() == false)
         {
             cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " not found." << endl;
@@ -42,10 +51,17 @@ void option5()
         getline(cin, choiceDelete);
         if(choiceDelete[0] == 'Y' || choiceDelete[0] == 'y')
         {
-            cout << "\n\t\tRecord for SSN: " << pPerson->GetSSNWithHyphens() << 
-                " Deleted!" << endl;
+            //Vehicle is deleted first because this makes the logic of checking for its driver more straightforward
+            if( pPerson->IsFound() || !pPerson->IsDeleted())
+            {
+                pVehicle->SetDeleted(true);
+                pVehicleFile->UpdateVehicle(*pVehicle);//ie write them back to the file, as deleted
+            }
             pPerson->SetDeleted(true);
             pPersonFile->UpdatePerson(*pPerson);//ie write them back to the file, as deleted
+
+            cout << "\n\t\tRecord for SSN: " << pPerson->GetSSNWithHyphens() << 
+                " Deleted!" << endl;
         }
         else
             cout << "\n\t\tRecord for SSN: " << pPerson->GetSSNWithHyphens() << 
@@ -56,6 +72,8 @@ void option5()
 
     delete pPerson;
     delete pPersonFile;
+    delete pVehicle;
+    delete pVehicleFile;
 }
 void PrintHeading5()
 {
