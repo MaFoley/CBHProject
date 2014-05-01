@@ -31,8 +31,8 @@ void option7()
         {
             PersonsPrinted++;
             aVehicle = pVehicleFile->SearchBySSN(aPerson.GetSSN());
+            aVehicle.PrintVehicle();
         }
-        aVehicle.PrintVehicle();
         if(PersonsPrinted % RECPERPAGE == 0)
         {
             test = UserWait();

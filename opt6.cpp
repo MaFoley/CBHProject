@@ -25,6 +25,9 @@ void option6()
     string test;
     int intChoice;
     string inData;
+    //thisPerson object is used to ensure an updated SSN doesn't already exist
+    Person testUpdatePerson;
+
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
     VehicleFile * pVehicleFile = new VehicleFile;
@@ -52,6 +55,7 @@ void option6()
             if(pPerson->IsFound() == false || pPerson->IsDeleted())
             {
                 cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " not found." << endl;
+                UserWait();
                 break;
             }
 
@@ -76,7 +80,7 @@ void option6()
                 pVehicleFile->UpdateVehicle(*pVehicle);
                 pVehicleFile->SortBySSN();
                 cout << "\n\t\tChanges to Record Committed to File." << endl;
-                test = UserWait();
+                UserWait();
                 break;
             }
             intChoice = atoi(choice.c_str());
@@ -86,7 +90,15 @@ void option6()
                     cout << "\n\n\t\tEnter new SSN: ";
                     getline(cin,inData);
                     cin.sync();
+                    testUpdatePerson = pPersonFile->SearchBySSN(inData);
+                    if(testUpdatePerson.IsFound())
+                    {
+                        cout << "\n\t\tSSN Already Exists in File. Change to SSN not saved." << endl;
+                        UserWait();
+                        break;
+                    }
                     pPerson->SetSSN(Trim(inData));
+                    pVehicle->SetSSN(pPerson->GetSSN());
                    break;
                 case 2:
                     cout << "\n\n\t\tEnter new Last Name: ";
@@ -137,7 +149,7 @@ void option6()
                     system("clear");
                     cout << "\n\t\tNow Displaying Codes for: County";
                     pCounty->DisplayCounties();
-                    cout << "\n\n\t\tEnter State Code: ";
+                    cout << "\n\n\t\tEnter County Code: ";
                     getline(cin, inData);
                     pPerson->SetCountyCode(Trim(inData));
                     break;

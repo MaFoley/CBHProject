@@ -44,6 +44,8 @@ void option4()
         cin.sync();
         if(inSSN[0] == 'q' || inSSN[0] == 'Q') break;
         *pPerson = pPersonFile->SearchBySSN(inSSN);
+
+        //Ensuring that the Record does not alrady exist
         if(pPerson->IsFound() == true)
         {
             cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " already exists." << endl;
@@ -124,11 +126,14 @@ void option4()
         getline(cin, choice);
         cin.sync();
 
+
+
         //Everything in this if block is Populating the Vehicle Record
         if(choice[0] == 'y' || choice[0] =='Y')
         {
             UserInputVehicle(*pPerson, *pVehicle);
         }
+
 
 
         system("clear");

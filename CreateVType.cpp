@@ -79,8 +79,9 @@ int main()
     inputFile.close();
     outputFile.close();
 
-    cout << "Number of valid records written to " << OUTFILE << ": " << numValid << endl;
-    cout << "Number of invalid not written: " << numInvalid << endl;
+    cout << "vtype.db: " << endl;
+    cout << "\tNumber of valid records written to " << OUTFILE << ": " << numValid << endl;
+    cout << "\tNumber of invalid not written: " << numInvalid << endl;
      
     return 0;
 }

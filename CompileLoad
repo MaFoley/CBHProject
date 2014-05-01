@@ -8,8 +8,9 @@ echo 'CreateVType:'
 g++ -o CreateVType CreateVType.cpp
 echo 'CreateState:'
 g++ -o CreateState CreateState.cpp
-echo 'CreateVehicle:'
-g++ -o CreateVehicle CreateVehicle.cpp VehicleFile.cpp Vehicle.cpp SSNNoHyphens.cpp SSNHyphens.cpp Trim.cpp Upper.cpp
 echo 'CreatePerson:'
 g++ -o CreatePerson CreatePerson.cpp PersonFile.cpp Person.cpp SSNNoHyphens.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp \
     State.cpp County.cpp Trim.cpp Upper.cpp
+echo 'CreateVehicle:'
+g++ -o CreateVehicle CreateVehicle.cpp VehicleFile.cpp Vehicle.cpp SSNNoHyphens.cpp SSNHyphens.cpp Trim.cpp Upper.cpp \
+    Color.cpp VMake.cpp VType.cpp
