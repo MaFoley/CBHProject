@@ -122,6 +122,7 @@ void Person::DisplayPerson()
     //This buffer is the set-up for the display. The strncpy's below populate this buffer
     char outBuffer[][84] = {
        //012345678901234567890123456789012345678901234567890123456789012345678901234567890
+        "=============================Person Information====================================",//00
         "SSN       : $$$-$$-$$$$                        OLN    :      *********             ",//00
         "FULL NAME : LASTNAME          FIRSTNAME    M                                       ",//01
         "ADDRESS   : STREET                             STATE  : (00) STATE                 ",//02
@@ -146,7 +147,7 @@ void Person::DisplayPerson()
     }
     data.assign(34, ' ');
     data.replace(0, fullName.length(), fullName);
-    strncpy(outBuffer[1]+12, data.c_str(), 34);
+    strncpy(outBuffer[2]+12, data.c_str(), 34);
 
     //Making the second part of address look good
     CityStZip.clear();
@@ -157,23 +158,23 @@ void Person::DisplayPerson()
     CityStZip.append(Trim(ZipHyphens(_zip)));
     data.assign(34, ' ');
     data.replace(0, CityStZip.length(), CityStZip);
-    strncpy(outBuffer[3]+12, data.c_str(), 34);
+    strncpy(outBuffer[4]+12, data.c_str(), 34);
 
     //Regular stuff
-    strncpy(outBuffer[0]+12, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
-    strncpy(outBuffer[0]+61, _OLN.c_str(), OLNLENGTH);
+    strncpy(outBuffer[1]+12, SSNHyphens(_SSN).c_str(), SSNLENGTH+2);
+    strncpy(outBuffer[1]+61, _OLN.c_str(), OLNLENGTH);
 
-    strncpy(outBuffer[2]+12, _street.c_str(), _street.length());
-    strncpy(outBuffer[2]+57, _stateCode.c_str(), STATECODELENGTH);
+    strncpy(outBuffer[3]+12, _street.c_str(), _street.length());
+    strncpy(outBuffer[3]+57, _stateCode.c_str(), STATECODELENGTH);
     Upper(StateName);
-    strncpy(outBuffer[2]+61, StateName.c_str()+2, newState.GetRecordLength()-2);
+    strncpy(outBuffer[3]+61, StateName.c_str()+2, newState.GetRecordLength()-2);
 
-    strncpy(outBuffer[3]+57, _countyCode.c_str(), COUNTYCODELENGTH);
+    strncpy(outBuffer[4]+57, _countyCode.c_str(), COUNTYCODELENGTH);
     Upper(CountyName);
-    strncpy(outBuffer[3]+61, CountyName.c_str(), newCounty.GetRecordLength());
+    strncpy(outBuffer[4]+61, CountyName.c_str(), newCounty.GetRecordLength());
 
     //Writing out the buffer
-    for(i = 0; i < 4; i++)
+    for(i = 0; i < 5; i++)
     {
         cout << "\n\t";
         cout.write(outBuffer[i], sizeof(outBuffer[i]));

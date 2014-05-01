@@ -121,6 +121,11 @@ void option4()
 
         system("clear");
         pPerson->DisplayPerson();
+
+        /*
+         * this code block needs to be adding the vehicle
+         */
+
         cout << "\t\tCommit Record to File? (Y/N): " << flush;
         getline(cin, choice);
         cin.sync();

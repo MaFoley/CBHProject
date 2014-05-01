@@ -5,7 +5,7 @@ CC=g++
 CFLAGS=
 OBJ=cbhproj.o UserWait.o opt1.o DisplayRecord.o opt4.o opt5.o opt6.o opt7.o \
 	Color.o County.o State.o VMake.o VType.o Upper.o SSNHyphens.o SSNNoHyphens.o \
-	Person.o PersonFile.o ZipHyphens.o ZipNoHyphens.o Trim.o
+	Person.o PersonFile.o Vehicle.o VehicleFile.o ZipHyphens.o ZipNoHyphens.o Trim.o
 
 cbhproj: $(OBJ)
 	$(CC) -o cbhproj $(OBJ)
@@ -19,7 +19,8 @@ UserWait.o: UserWait.cpp
 opt1.o: opt1.cpp UserWait.cpp Color.cpp County.cpp State.cpp VMake.cpp VType.cpp
 	$(CC) $(CFLAGS) -c opt1.cpp
 
-DisplayRecord.o: DisplayRecord.cpp PersonFile.cpp Person.cpp UserWait.cpp SSNHyphens.cpp
+DisplayRecord.o: DisplayRecord.cpp PersonFile.cpp Person.cpp Vehicle.cpp VehicleFile.cpp \
+	UserWait.cpp SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c DisplayRecord.cpp
 
 opt4.o: opt4.cpp SSNHyphens.cpp Trim.cpp UserWait.cpp
@@ -34,11 +35,18 @@ opt6.o: opt6.cpp Trim.cpp UserWait.cpp SSNHyphens.cpp
 opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp
 	$(CC) $(CFLAGS) -c opt7.cpp
 
-Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp State.cpp County.cpp Trim.cpp
+Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp State.cpp County.cpp \
+   	Trim.cpp Upper.cpp
 	$(CC) $(CFLAGS) -c Person.cpp
 
 PersonFile.o: PersonFile.cpp Person.cpp SSNNoHyphens.cpp
 	$(CC) $(CFLAGS) -c PersonFile.cpp
+
+Vehicle.o: Vehicle.cpp SSNHyphens.cpp Color.cpp VType.cpp VMake.cpp Trim.cpp Upper.cpp
+	$(CC) $(CFLAGS) -c Vehicle.cpp
+
+VehicleFile.o: VehicleFile.cpp Vehicle.cpp SSNNoHyphens.cpp
+	$(CC) $(CFLAGS) -c VehicleFile.cpp
 
 SSNHyphens.o: SSNHyphens.cpp
 	$(CC) $(CFLAGS) -c SSNHyphens.cpp

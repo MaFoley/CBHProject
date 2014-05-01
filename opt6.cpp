@@ -4,8 +4,13 @@
 #include <cstdlib>
 #include "Person.h"
 #include "PersonFile.h"
+#include "Vehicle.h"
+#include "VehicleFile.h"
 #include "State.h"
 #include "County.h"
+#include "Color.h"
+#include "VType.h"
+#include "VMake.h"
 
 using namespace std;
 void PrintHeading6();
@@ -22,8 +27,13 @@ void option6()
     string inData;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
+    VehicleFile * pVehicleFile = new VehicleFile;
+    Vehicle * pVehicle = new Vehicle;
     State * pState = new State;
     County * pCounty = new County;
+    Color * pColor = new Color;
+    VType * pVType = new VType;
+    VMake * pVMake = new VMake;
 
     while(true)
     {
@@ -34,6 +44,9 @@ void option6()
         if(inSSN[0] == 'q' || inSSN[0] == 'Q') break;
         //the Search method sanitizes the hyphens
         *pPerson = pPersonFile->SearchBySSN(inSSN);
+        if(pPerson->IsFound() && !pPerson->IsDeleted())
+            *pVehicle = pVehicleFile->SearchBySSN(pPerson->GetSSN());
+
         while(true)
         {
             if(pPerson->IsFound() == false || pPerson->IsDeleted())
@@ -46,6 +59,7 @@ void option6()
             cout << "\n\t\tDisplaying Record to Be Updated\n";
 
             pPerson->DisplayPerson();
+            pVehicle->DisplayVehicle();
             PrintMenuUpdate();
             getline(cin, choice);
             cin.sync();
@@ -59,8 +73,10 @@ void option6()
             {
                 pPersonFile->UpdatePerson(*pPerson);
                 pPersonFile->SortBySSN();
-                cout << "Changes to Record Committed to File." << endl;
-                UserWait();
+                pVehicleFile->UpdateVehicle(*pVehicle);
+                pVehicleFile->SortBySSN();
+                cout << "\n\t\tChanges to Record Committed to File." << endl;
+                test = UserWait();
                 break;
             }
             intChoice = atoi(choice.c_str());
@@ -131,6 +147,44 @@ void option6()
                     cin.sync();
                     pPerson->SetZip(Trim(inData));
                     break;
+                case 11:
+                    system("clear");
+                    cout << "\n\t\tNow Displaying Codes for: Top Color";
+                    pColor->DisplayColors();
+                    cout << "\n\n\t\tEnter new Top Color Code: ";
+                    getline(cin, inData);
+                    pVehicle->SetTopColorCode(Trim(inData));
+                    break;
+                case 12:
+                    system("clear");
+                    cout << "\n\t\tNow Displaying Codes for: Bottom Color";
+                    pColor->DisplayColors();
+                    cout << "\n\n\t\tEnter new Bottom Color Code: ";
+                    getline(cin, inData);
+                    pVehicle->SetBottomColorCode(Trim(inData));
+                    break;
+                case 13:
+                    cout << "\n\n\t\tEnter new Tag: ";
+                    getline(cin, inData);
+                    cin.sync();
+                    pVehicle->SetTag(Trim(inData));
+                    break;
+                case 14:
+                    system("clear");
+                    cout << "\n\t\tNow Displaying Codes for: Vehicle Make";
+                    pVMake->DisplayVMakes();
+                    cout << "\n\n\t\tEnter new Vehicle Make Code: ";
+                    getline(cin, inData);
+                    pVehicle->SetVMakeCode(Trim(inData));
+                    break;
+                case 15:
+                    system("clear");
+                    cout << "\n\t\tNow Displaying Codes for: Vehicle Type";
+                    pVType->DisplayVTypes();
+                    cout << "\n\n\t\tEnter new Vehicle Type: ";
+                    getline(cin, inData);
+                    pVehicle->SetVTypeCode(Trim(inData));
+                    break;
                 default:
                     cout << "Invalid Selection: " << intChoice << " not recognized." << endl;
                     break;
@@ -140,8 +194,13 @@ void option6()
 
     delete pPerson;
     delete pPersonFile;
+    delete pVehicle;
+    delete pVehicleFile;
     delete pState;
     delete pCounty;
+    delete pColor;
+    delete pVType;
+    delete pVMake;
 }
 void PrintMenuUpdate()
 {
@@ -153,7 +212,9 @@ void PrintMenuUpdate()
     cout << "\n\t\t(05) Street Address                 ";
     cout << "\n\t\t(06) City                           ";
     cout << "\n\t\t=====================================";
-    cout << "\n\t\t(11) TAG             (14) V Make    ";
+    cout << "\n\t\t(11) Top Color       (14) V Make    ";
+    cout << "\n\t\t(12) Bottom Color    (15) V Type    ";
+    cout << "\n\t\t(13) Tag                            ";
     cout << "\n\t\t(C) Cancel Changes   (S) Save to File";
     cout << "\n\t\t*************************************";
     cout << "\n\n\t\tEnter Number of Field to Update: " << flush;

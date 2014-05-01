@@ -53,7 +53,7 @@ void VehicleFile::AddVehicle(Vehicle & aVehicle)
     UpdateVehicle(aVehicle);
     SortBySSN();
 }
-
+*/
 void VehicleFile::UpdateVehicle(Vehicle & aVehicle)
 {
     string record;
@@ -61,7 +61,7 @@ void VehicleFile::UpdateVehicle(Vehicle & aVehicle)
     _vehicleFile.seekp(_currentRecordNumber*RECORDSIZE);
     _vehicleFile.write(record.c_str(), RECORDSIZE);
 }
-*/
+
 void VehicleFile::SortBySSN()
 {
     bool sorted;

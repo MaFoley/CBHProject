@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include "Person.h"
 #include "PersonFile.h"
+#include "Vehicle.h"
+#include "VehicleFile.h"
 
 using namespace std;
 void PrintHeading2(const int LookupFlag);
@@ -19,6 +21,8 @@ void DisplayRecord(const int LookupFlag)
     string test;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
+    VehicleFile * pVehicleFile = new VehicleFile;
+    Vehicle * pVehicle = new Vehicle;
 
     while(true)
     {
@@ -41,12 +45,20 @@ void DisplayRecord(const int LookupFlag)
             else
                 cout << "\t\t\tRecord for OLN: " <<inData << " not found." << endl;
         }
+        //This if statement ensures the vehicle is displayed iff a valid Person is returned
+        if(pPerson->IsFound() && !pPerson->IsDeleted())
+        {
+            *pVehicle = pVehicleFile->SearchBySSN(pPerson->GetSSN());
+            pVehicle->DisplayVehicle();
+        }
         test = UserWait();
         if(test[0] == 'q' || test[0] == 'Q') break;
     }
 
     delete pPerson;
     delete pPersonFile;
+    delete pVehicle;
+    delete pVehicleFile;
 }
 void PrintHeading2(const int LookupFlag)
 {
