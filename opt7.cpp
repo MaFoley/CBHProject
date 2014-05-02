@@ -15,7 +15,7 @@ void option7()
     Person aPerson;
     VehicleFile * pVehicleFile = new VehicleFile;
     Vehicle aVehicle;
-    const int RECPERPAGE = 5;
+    const int RECPERPAGE = 8;
     int i;
     int PersonsOnPage;
     int PersonsPrinted;

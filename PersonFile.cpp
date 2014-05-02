@@ -106,6 +106,7 @@ Person PersonFile::SearchBySSN(const string & aSSN)
     int last;
     int midpoint;
     int icompare;
+    string ssnBlankFilled = "         "; //Searching needs to account for spaces
     char dataRecord[RECORDSIZE];
     string ssnSearch;
     Person foundPerson;
@@ -113,22 +114,29 @@ Person PersonFile::SearchBySSN(const string & aSSN)
     foundPerson.SetFound(false);
     foundPerson.SetSSN(aSSN);
     ssnSearch = SSNNoHyphens(aSSN);
+    ssnBlankFilled.replace(0,ssnSearch.length(), ssnSearch);
     first=1;
     last=_numberPersons;
 
     while(true)
     {
-        if(first > last) return foundPerson;
+        if(first > last)
+        { 
+            cout << "currentRecordNumber: " << _currentRecordNumber << endl;
+            return foundPerson;
+        } 
+
         midpoint=(first+last)/2;
         _personFile.seekg(midpoint*RECORDSIZE);
         _personFile.read(dataRecord,RECORDSIZE);
-        icompare =  strncmp(ssnSearch.c_str(),dataRecord,9);
+        icompare =  strncmp(ssnBlankFilled.c_str(),dataRecord,9);
 
         if(icompare < 0) last=midpoint-1;
         if(icompare > 0) first=midpoint+1;
         if(icompare == 0)
         {
             _currentRecordNumber=midpoint;
+            cout << "currentRecordNumber: " << _currentRecordNumber << endl;
             foundPerson.MakePerson(dataRecord);
             if(foundPerson.IsDeleted())
                 foundPerson.SetFound(false);
@@ -168,7 +176,6 @@ Person PersonFile::SearchByOLN(const string & aOLN)
 Person PersonFile::SearchByRecordNumber(const int & inRecordNumber)
 {
     char dataRecord[RECORDSIZE];
-    int icompare;
     Person foundPerson;
     if(inRecordNumber < 1 || inRecordNumber > _numberPersons)
     {

@@ -1,4 +1,11 @@
 #include <string>
+/*
+ All of the private members barring length and found are read from the person.db file using the
+ PersonFile class.  The SetZip and SetSSN ensrue the member is stored without hyphens
+ As a general rule, data validation is done in the auxiliary file classes. Fields are star filled for invalid codes
+ Deleting a Person in the file does not physically delete them, which causes some of the strange if's in Add and Update options
+ PrintPerson is used in the display report option, and DisplayPerson is used to display a single record
+ */
 using namespace std;
 
 string SSNHyphens(const string &);

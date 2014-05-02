@@ -1,6 +1,11 @@
 #include <fstream>
 #include <string>
 #include <cstdio>
+/*
+ This Class deals with writing and reading from the person.db file.
+ the Searches require an exact match for 9 characters, i.e. '1' only matches on "1        "
+ and not "123456789"
+ * */
 
 using namespace std;
 class Person;
@@ -12,6 +17,7 @@ public:
     ~PersonFile();
     int GetNumberPersons() const { return _numberPersons; }
     int GetCurrentRecordNumber() const { return _currentRecordNumber; }
+    void SetCurrentRecordNumber(const int inRecordNumber) {_currentRecordNumber = inRecordNumber; }
     void SortBySSN();
     Person SearchBySSN(const string & inSSN);
     Person SearchByOLN(const string & inOLN);

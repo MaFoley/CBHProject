@@ -1,5 +1,7 @@
-//Change Members doe
 #include <string>
+/*
+ *There are fewer members for Vehicle than Person.  However, most of them are Codes for information in the auxiliary files
+ */
 using namespace std;
 
 string SSNHyphens(const string &);
@@ -26,7 +28,6 @@ class Vehicle
         const bool & IsFound() const { return _found; }
         const bool & IsDeleted() const { return _deleted; }
 
-        //Note that _SSN is ALWAYS stored without hyphens
         //These are all the sets
         void SetSSN(const string & inSSN) { _SSN = SSNNoHyphens(inSSN); }
 

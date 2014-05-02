@@ -24,6 +24,7 @@ void option6()
     string choice;
     string test;
     int intChoice;
+    int currentRecordNumber;
     string inData;
     //thisPerson object is used to ensure an updated SSN doesn't already exist
     Person testUpdatePerson;
@@ -50,6 +51,8 @@ void option6()
         if(pPerson->IsFound() && !pPerson->IsDeleted())
             *pVehicle = pVehicleFile->SearchBySSN(pPerson->GetSSN());
 
+        currentRecordNumber = pPersonFile->GetCurrentRecordNumber();
+
         while(true)
         {
             if(pPerson->IsFound() == false || pPerson->IsDeleted())
@@ -75,6 +78,7 @@ void option6()
             }
             if(choice[0] == 's' || choice[0] == 'S')
             {
+                pPersonFile->SetCurrentRecordNumber(currentRecordNumber);
                 pPersonFile->UpdatePerson(*pPerson);
                 pPersonFile->SortBySSN();
                 pVehicleFile->UpdateVehicle(*pVehicle);
@@ -91,7 +95,7 @@ void option6()
                     getline(cin,inData);
                     cin.sync();
                     testUpdatePerson = pPersonFile->SearchBySSN(inData);
-                    //IsDeleted is included because duplicate SSNs cause issues
+                    //IsDeleted is included because duplicate SSNs cause issues with SearchBySSN
                     if(testUpdatePerson.IsFound() || testUpdatePerson.IsDeleted())
                     {
                         cout << "\n\t\tSSN Already Exists in File. Change to SSN not saved." << endl;
@@ -135,6 +139,14 @@ void option6()
                     cout << "\n\n\t\tEnter new OLN: ";
                     getline(cin, inData);
                     cin.sync();
+                    testUpdatePerson = pPersonFile->SearchByOLN(inData);
+                     //IsDeleted is included because duplicate OLNs cause issues with SearchByOLN
+                    if(testUpdatePerson.IsFound() || testUpdatePerson.IsDeleted())
+                    {
+                        cout << "\n\t\tOLN Already Exists in File. Change to OLN not saved." << endl;
+                        UserWait();
+                        break;
+                    }
                     pPerson->SetOLN(Trim(inData));
                     break;
                 case 8:

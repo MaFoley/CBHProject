@@ -26,6 +26,7 @@ void option4()
     string choice;
     string test;
     string inData;
+    Person testUpdatePerson;
     PersonFile * pPersonFile = new PersonFile;
     Person * pPerson = new Person;
     VehicleFile * pVehicleFile = new VehicleFile;
@@ -56,13 +57,27 @@ void option4()
             continue;
         }
         //This Block only runs if the SSN was not found in the file
-        //SetFound is run so the Person can be displayed as they are updated
+        //SetFound is run so the Person can be displayed as before they are written out
         pPerson->SetFound(true);
         pPerson->SetSSN(Trim(inSSN));
 
-        cout << "\n\n\t\tEnter new OLN           : ";
-        getline(cin, inData);
-        cin.sync();
+        while(true)
+        {
+            cout << "\n\n\t\tEnter new OLN: ";
+            getline(cin, inData);
+            cin.sync();
+            testUpdatePerson = pPersonFile->SearchByOLN(inData);
+             //IsDeleted is included because duplicate OLNs cause issues with SearchByOLN
+            if(testUpdatePerson.IsFound() || testUpdatePerson.IsDeleted())
+            {
+                cout << "\n\t\tOLN Already Exists in File. Choose Different OLN." << endl;
+                UserWait();
+                system("clear");
+                continue;
+            }
+            break;
+        }
+
         pPerson->SetOLN(Trim(inData));
 
         cout << "\n\n\t\tEnter new Last Name     : ";
