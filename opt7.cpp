@@ -17,8 +17,6 @@ void option7()
     Vehicle aVehicle;
     const int RECPERPAGE = 5;
     int i;
-    int NumberOfPages;
-    int CurrentPage;
     int PersonsOnPage;
     int PersonsPrinted;
     string test;
@@ -29,7 +27,6 @@ void option7()
     //a display of any records occuring before a pause
     PersonsOnPage= 0;
     PersonsPrinted = 0;
-    CurrentPage = 0;
     for(i = 1; i <= pPersonFile->GetNumberPersons();i++)
     {
         aPerson = pPersonFile->SearchByRecordNumber(i);
@@ -51,7 +48,7 @@ void option7()
             PersonsOnPage = 0;
         }
     }
-    if(i >= pPersonFile->GetNumberPersons()) 
+    if(i >= pPersonFile->GetNumberPersons() && PersonsPrinted % RECPERPAGE != 0) 
         UserWait();
     
     delete pPersonFile;

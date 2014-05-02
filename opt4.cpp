@@ -46,7 +46,7 @@ void option4()
         *pPerson = pPersonFile->SearchBySSN(inSSN);
 
         //Ensuring that the Record does not alrady exist
-        if(pPerson->IsFound() == true)
+        if(pPerson->IsFound() == true || pPerson->IsDeleted())
         {
             cout << "\n\t\t\tRecord for SSN: " << SSNHyphens(inSSN) << " already exists." << endl;
             test = UserWait();

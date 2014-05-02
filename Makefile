@@ -10,7 +10,7 @@ OBJ=cbhproj.o UserWait.o opt1.o DisplayRecord.o opt4.o opt5.o opt6.o opt7.o \
 cbhproj: $(OBJ)
 	$(CC) -o cbhproj $(OBJ)
 
-cbhproj.o: cbhproj.cpp UserWait.cpp State.cpp
+cbhproj.o: cbhproj.cpp UserWait.cpp DisplayRecord.cpp
 	$(CC) $(CFLAGS) -c cbhproj.cpp
 
 UserWait.o: UserWait.cpp
@@ -34,6 +34,21 @@ opt6.o: opt6.cpp Trim.cpp UserWait.cpp SSNHyphens.cpp PersonFile.cpp Person.cpp 
 
 opt7.o: opt7.cpp Person.cpp PersonFile.cpp UserWait.cpp Vehicle.cpp VehicleFile.cpp
 	$(CC) $(CFLAGS) -c opt7.cpp
+
+Color.o: Color.cpp
+	$(CC) $(CFLAGS) -c Color.cpp
+
+County.o: County.cpp
+	$(CC) $(CFLAGS) -c County.cpp
+
+State.o: State.cpp
+	$(CC) $(CFLAGS) -c State.cpp
+
+VMake.o: VMake.cpp
+	$(CC) $(CFLAGS) -c VMake.cpp
+
+VType.o: VType.cpp
+	$(CC) $(CFLAGS) -c VType.cpp
 
 Person.o: Person.cpp SSNHyphens.cpp ZipHyphens.cpp ZipNoHyphens.cpp State.cpp County.cpp \
    	Trim.cpp Upper.cpp
@@ -62,6 +77,9 @@ ZipNoHyphens.o: ZipNoHyphens.cpp
 
 Trim.o: Trim.cpp
 	$(CC) $(CFLAGS) -c Trim.cpp
+
+Upper.o: Upper.cpp
+	$(CC) $(CFLAGS) -c Upper.cpp
 
 clean:
 	rm cbhproj *.o *.db core mafoley1.tar mafoley1.tar.gz
