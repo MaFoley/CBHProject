@@ -91,7 +91,7 @@ void option6()
                     getline(cin,inData);
                     cin.sync();
                     testUpdatePerson = pPersonFile->SearchBySSN(inData);
-                    if(testUpdatePerson.IsFound())
+                    if(testUpdatePerson.IsFound() || testUpdatePerson.IsDeleted())
                     {
                         cout << "\n\t\tSSN Already Exists in File. Change to SSN not saved." << endl;
                         UserWait();

@@ -141,6 +141,7 @@ Person PersonFile::SearchByOLN(const string & aOLN)
 {
     int icompare;
     char dataRecord[RECORDSIZE];
+    string olnBlankFilled = "         "; //Searching by OLN needs to account for spaces
     Person foundPerson;
 
     foundPerson.SetFound(false);
@@ -150,7 +151,8 @@ Person PersonFile::SearchByOLN(const string & aOLN)
     {
         _personFile.seekg(searchRecord*RECORDSIZE);
         _personFile.read(dataRecord,RECORDSIZE);
-        icompare =  strncmp(aOLN.c_str(), dataRecord+9 ,aOLN.length());
+        olnBlankFilled.replace(0,aOLN.length(), aOLN);
+        icompare =  strncmp(olnBlankFilled.c_str(), dataRecord+9 ,olnBlankFilled.length());
 
         if(icompare == 0)
         {

@@ -17,12 +17,19 @@ void option7()
     Vehicle aVehicle;
     const int RECPERPAGE = 5;
     int i;
+    int NumberOfPages;
+    int CurrentPage;
+    int PersonsOnPage;
     int PersonsPrinted;
     string test;
 
     system("clear");
     PrintHeading7();
+    //PersonsOnPage is required to prevent a bug where deleted records would prevent
+    //a display of any records occuring before a pause
+    PersonsOnPage= 0;
     PersonsPrinted = 0;
+    CurrentPage = 0;
     for(i = 1; i <= pPersonFile->GetNumberPersons();i++)
     {
         aPerson = pPersonFile->SearchByRecordNumber(i);
@@ -30,15 +37,18 @@ void option7()
         if(aPerson.IsFound() && !aPerson.IsDeleted())
         {
             PersonsPrinted++;
+            PersonsOnPage++;
             aVehicle = pVehicleFile->SearchBySSN(aPerson.GetSSN());
             aVehicle.PrintVehicle();
         }
-        if(PersonsPrinted % RECPERPAGE == 0)
+        if(PersonsPrinted % RECPERPAGE == 0 && PersonsOnPage != 0)
         {
+            cout << "====================================================================================" << endl;
             test = UserWait();
             if(test[0] == 'q' || test[0] =='Q') break;
             system("clear");
             PrintHeading7();
+            PersonsOnPage = 0;
         }
     }
     if(i >= pPersonFile->GetNumberPersons()) 

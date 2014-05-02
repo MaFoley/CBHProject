@@ -26,7 +26,6 @@ int main()
         cerr << "Problem opening input file: " << INFILE << endl;
         return -1;
     }
-    cout << INFILE << " successfully opened..." << endl;
 
     outputFile.open(OUTFILE);
 
@@ -60,12 +59,12 @@ int main()
     inputFile.close();
     outputFile.close();
 
-    cout << "Number of valid records written to " << OUTFILE << ": " << numberRecords << endl;
-    cout << "Sorting..." << endl;
+    cout << "\tNumber of valid records written to " << OUTFILE << ": " << numberRecords << endl;
+    cout << "\tSorting..." << endl;
     PersonFile * pPersonFile = new PersonFile;
     pPersonFile -> SortBySSN();
     delete pPersonFile;
-    cout << "Sorted!" << endl;
+    cout << "\tSorted!" << endl;
 
     return 0;
 }
